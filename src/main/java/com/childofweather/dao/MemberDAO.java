@@ -71,6 +71,7 @@ public class MemberDAO {
             infoDTO.setName(rs.getString("name"));
             infoDTO.setEmail(rs.getString("email"));
             infoDTO.setPassword(rs.getString("password"));
+            infoDTO.setRole(rs.getString("role"));
             
         } catch (SQLException e) {
             e.printStackTrace();
