@@ -14,37 +14,9 @@
 <body>
 <div class="app-root">
 
-    <!-- 상단 헤더 -->
-    <header class="app-header">
-        <div class="app-header-left">
-            <div class="app-logo">☁</div>
-            <div class="app-title-group">
-                <h1>날씨의 아이</h1>
-                <p>똑똑한 개인 맞춤형 날씨 알림</p>
-            </div>
-        </div>
-        <div class="app-header-right">
-            <div class="user-badge-circle">
-   		 		${fn:substring(sessionScope.loginUser.name, 0, 1)}
-			</div>
-            <div class="user-info">
-    			<span class="name">${sessionScope.loginUser.name}</span>
-    			<span class="region">경북</span>
-			</div>
-        </div>
-    </header>
-
-    <!-- 탭 -->
-    <nav class="main-tabs">
-        <div class="main-tabs-inner">
-            <div class="tab-item active">대시보드</div>
-            <div class="tab-item">활동</div>
-            <div class="tab-item">경로</div>
-            <div class="tab-item">알림</div>
-            <div class="tab-item">마이</div>
-            <div class="tab-item">관리자</div>
-        </div>
-    </nav>
+    <jsp:include page="/WEB-INF/views/common/header.jsp">
+        <jsp:param name="activeMenu" value="dashboard" />
+    </jsp:include>
 
     <!-- 메인 내용 -->
     <main class="main-wrapper">
