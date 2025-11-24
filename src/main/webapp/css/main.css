@@ -1,0 +1,396 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f3f4fb;
+    color: #111827;
+}
+
+.app-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 상단 앱 헤더 : 좌우 여백만 살짝, 거의 풀폭 */
+
+.app-header {
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.app-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+}
+
+.app-title-group h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.app-title-group p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+.app-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-badge-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+}
+
+.user-info .role {
+    font-weight: 500;
+    color: #111827;
+}
+
+.user-info .region {
+    color: #6b7280;
+}
+
+/* 탭 메뉴 : 최대 1280px까지 넓게 */
+
+.main-tabs {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.main-tabs-inner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    gap: 8px;
+    padding: 0 48px;
+}
+
+.tab-item {
+    flex: 0 0 auto;
+    padding: 14px 22px;
+    font-size: 14px;
+    color: #4b5563;
+    text-align: center;
+    cursor: default;
+}
+
+.tab-item.active {
+    color: #111827;
+    font-weight: 600;
+    border-bottom: 2px solid #2563eb;
+}
+
+/* 메인 컨테이너 : 1280px, 좌우 여백만 조금 */
+
+.main-wrapper {
+    flex: 1;
+    width: 100%;
+    max-width: 1280px;
+    margin: 24px auto 32px;
+    padding: 0 48px;
+}
+
+/* 현재 날씨 카드 : 더 크고 높게 */
+
+.current-weather-card {
+    border-radius: 28px;
+    background: linear-gradient(135deg, #2563eb, #6366f1);
+    padding: 32px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    box-shadow: 0 22px 40px rgba(37, 99, 235, 0.32);
+    margin-bottom: 28px;
+}
+
+.cw-left-location {
+    font-size: 15px;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.cw-left-temp {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.cw-temp-value {
+    font-size: 64px;
+    font-weight: 700;
+}
+
+.cw-temp-unit {
+    font-size: 22px;
+    opacity: 0.85;
+}
+
+.cw-condition {
+    font-size: 20px;
+    margin-top: 6px;
+}
+
+.cw-left-sub {
+    margin-top: 4px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.cw-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.cw-stat-row {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.cw-stat-pill {
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.18);
+    font-size: 12px;
+}
+
+/* 섹션 제목 */
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 8px 0 14px;
+}
+
+/* 추천 카드 : 3컬럼 고정 + 높이 키움 */
+
+.recommend-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.rec-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 18px 20px;
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
+    border: 1px solid #e5e7eb;
+    min-height: 170px;
+}
+
+.rec-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.rec-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rec-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.rec-icon.sun {
+    background: #ecfdf5;
+    color: #16a34a;
+}
+
+.rec-icon.carwash {
+    background: #e0f2fe;
+    color: #2563eb;
+}
+
+.rec-icon.route {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.rec-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.rec-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.rec-badge.optimal {
+    background: #111827;
+    color: #f9fafb;
+}
+
+.rec-badge.good {
+    background: #e0f2fe;
+    color: #1d4ed8;
+}
+
+.rec-badge.warn {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.rec-body {
+    font-size: 13px;
+    color: #4b5563;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rec-time-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rec-time-icon {
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+/* 시간별 예보 카드도 넓게 */
+
+.hourly-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 18px 20px;
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
+    border: 1px solid #e5e7eb;
+    margin-top: 18px;
+}
+
+.hourly-header p {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.hourly-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.hour-item {
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 6px;
+    border-radius: 16px;
+}
+
+.hour-time {
+    font-size: 12px;
+    color: #4b5563;
+    margin-bottom: 4px;
+}
+
+.hour-icon {
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+.hour-temp {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.hour-pop {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+.footer {
+    padding: 12px 0 16px;
+    text-align: center;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+@media (max-width: 900px) {
+    .app-header,
+    .main-tabs-inner,
+    .main-wrapper {
+        padding: 0 20px;
+    }
+
+    .current-weather-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .cw-right {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .recommend-row {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .hourly-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
