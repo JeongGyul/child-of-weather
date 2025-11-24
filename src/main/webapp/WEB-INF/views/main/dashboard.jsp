@@ -41,7 +41,7 @@
             <div class="tab-item">활동</div>
             <div class="tab-item">경로</div>
             <div class="tab-item">알림</div>
-            <div class="tab-item">마이</div>
+            <a href="${pageContext.request.contextPath}/mypage.do" class="tab-item">마이</a>
             <div class="tab-item">관리자</div>
         </div>
     </nav>
