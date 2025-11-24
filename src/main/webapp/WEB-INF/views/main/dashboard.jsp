@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>날씨의 아이 - 대시보드</title>
+    <title>대시보드 - 날씨의 아이</title>
 
     <!-- 외부 CSS 연결 -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">

@@ -17,7 +17,7 @@ public class JdbcConnectUtil {
             // ⚠️ 네 DB 환경에 맞게 수정
             String url = "jdbc:mysql://localhost:3306/project";
             String user = "root";
-            String password = "12345678";
+            String password = "0000";
 
             conn = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException e) {

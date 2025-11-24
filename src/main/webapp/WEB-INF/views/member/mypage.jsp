@@ -6,23 +6,17 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지 - 날씨의 아이</title>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
     <!-- Tailwind CDN (개발용) -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
-<div class="min-h-screen flex flex-col items-center py-10">
 
-    <!-- 상단 헤더: 뒤로가기(홈) 버튼 -->
-    <div class="w-full max-w-5xl flex items-center justify-between mb-4 px-1">
-        <h1 class="text-xl font-semibold text-gray-900">
-            마이페이지
-        </h1>
-        <a href="${pageContext.request.contextPath}/dashboard.do"
-           class="inline-flex items-center gap-1 text-sm text-gray-700 border border-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-100">
-            ← 홈으로
-        </a>
-    </div>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+        <jsp:param name="activeMenu" value="my" />
+    </jsp:include>
+    
+<div class="min-h-screen flex flex-col items-center py-10">
 
     <!-- 전체 카드 -->
     <div class="w-full max-w-5xl bg-white rounded-2xl shadow-md p-8 space-y-8">

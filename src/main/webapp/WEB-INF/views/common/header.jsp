@@ -39,7 +39,10 @@
         </a>
         
         <div class="tab-item ${param.activeMenu == 'notification' ? 'active' : ''}">알림</div>
-        <div class="tab-item ${param.activeMenu == 'my' ? 'active' : ''}">마이</div>
+        
+        <a href="${pageContext.request.contextPath}/mypage.do" 
+        	class="tab-item ${param.activeMenu == 'my' ? 'active' : ''}">마이
+        </a>
         
         <c:if test="${sessionScope.loginUser.role == 'ADMIN'}">
             <a href="${pageContext.request.contextPath}/admin.do" 
