@@ -1,0 +1,332 @@
+@charset "UTF-8";
+
+/* =========================================
+   1. 공통 레이아웃 & 폰트 (대시보드 스타일 유지)
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f3f4fb; /* 연한 블루그레이 배경 */
+    color: #111827;
+}
+
+.app-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-wrapper {
+    flex: 1;
+    width: 100%;
+    max-width: 1280px;
+    margin: 24px auto 32px;
+    padding: 0 48px;
+}
+
+/* =========================================
+   2. 헤더 (Header) 스타일
+   ========================================= */
+.app-header {
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.app-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+}
+
+.app-title-group h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.app-title-group p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+.app-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-badge-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+}
+
+.user-info .name {
+    font-weight: 500;
+    color: #111827;
+}
+
+.user-info .region {
+    color: #6b7280;
+}
+
+/* =========================================
+   3. 네비게이션 탭 (밑줄형 스타일)
+   ========================================= */
+.main-tabs {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.main-tabs-inner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    gap: 8px;
+    padding: 0 48px;
+}
+
+.tab-item {
+    flex: 0 0 auto;
+    padding: 14px 22px;
+    font-size: 14px;
+    color: #4b5563;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-item:hover {
+    color: #111827;
+}
+
+.tab-item.active {
+    color: #111827;
+    font-weight: 600;
+    border-bottom: 2px solid #2563eb; /* 파란색 밑줄 */
+}
+
+/* =========================================
+   4. 관리자 페이지 전용 스타일
+   ========================================= */
+
+/* 페이지 타이틀 */
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.page-desc {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* 통계 카드 (Grid) */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.05);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.stat-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.stat-icon {
+    color: #9ca3af;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.stat-desc {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* 회원 목록 리스트 카드 */
+.list-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px 30px;
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.05);
+    border: 1px solid #e5e7eb;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.list-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* 검색창 */
+.search-input {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 10px 16px;
+    width: 280px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.search-input:focus {
+    background: #fff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* 데이터 테이블 */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table th {
+    text-align: left;
+    color: #6b7280;
+    font-weight: 600;
+    padding: 14px 10px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table td {
+    padding: 18px 10px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+    vertical-align: middle;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 역할 선택 박스 */
+.role-select {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background-color: #fff;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+}
+
+/* 강제 탈퇴 버튼 (빨간색) */
+.btn-delete {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-delete:hover {
+    background-color: #fca5a5;
+    color: #7f1d1d;
+}
+
+/* 푸터 */
+.footer {
+    padding: 40px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+    .app-header, .main-tabs-inner, .main-wrapper {
+        padding: 0 20px;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
