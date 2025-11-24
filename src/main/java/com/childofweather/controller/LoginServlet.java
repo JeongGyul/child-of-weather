@@ -13,38 +13,40 @@ import java.io.IOException;
 
 @WebServlet("/login.do")
 public class LoginServlet extends HttpServlet {
-
+	
+	@Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/views/member/login_register.jsp")
+               .forward(request, response);
+    }
+	
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
 
-        String id = request.getParameter("id");
-        String pw = request.getParameter("pw");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
         MemberDTO dto = new MemberDTO();
-        dto.setMemberid(id);
-        dto.setPassword(pw);
+        dto.setEmail(email);
+        dto.setPassword(password);
 
         MemberDAO dao = new MemberDAO();
         boolean ok = dao.login(dto);
 
         if (ok) {
+        	MemberDTO loginUser = dao.getMember(dto);
             HttpSession session = request.getSession();
-            session.setAttribute("loginId", id);
+            session.setAttribute("loginUser", loginUser);
 
-            // index.jsp로 보내면 index.jsp가 다시 main.jsp로 라우팅함
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         } else {
-            request.getRequestDispatcher("/WEB-INF/views/auth/loginFail.jsp")
+        	request.setAttribute("error", "이메일 또는 패스워드가 일치하지 않습니다.");
+            request.getRequestDispatcher("/WEB-INF/views/member/login_register.jsp")
                    .forward(request, response);
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        doPost(req, resp);
     }
 }

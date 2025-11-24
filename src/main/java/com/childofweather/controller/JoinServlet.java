@@ -18,33 +18,27 @@ public class JoinServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-
-        String id    = request.getParameter("id");
-        String pw    = request.getParameter("pw");
-        String name  = request.getParameter("name");
+        
+        String name = request.getParameter("name");
         String email = request.getParameter("email");
-
+        String password = request.getParameter("password");
+        
         MemberDTO dto = new MemberDTO();
-        dto.setMemberid(id);
-        dto.setPassword(pw);
         dto.setName(name);
         dto.setEmail(email);
+        dto.setPassword(password); 
 
         MemberDAO dao = new MemberDAO();
         int result = dao.insert(dto);
 
         if (result == 1) {
-            request.getRequestDispatcher("/WEB-INF/views/auth/joinOk.jsp")
+        	request.setAttribute("successMessage", "회원가입이 완료되었습니다!");
+            request.getRequestDispatcher("/WEB-INF/views/member/login_register.jsp")
                    .forward(request, response);
         } else {
-            request.getRequestDispatcher("/WEB-INF/views/auth/joinFail.jsp")
-                   .forward(request, response);
+        	request.setAttribute("error", "회원가입에 실패했습니다.");
+        	request.getRequestDispatcher("/WEB-INF/views/member/login_register.jsp")
+            		.forward(request, response);
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        doPost(req, resp);
     }
 }

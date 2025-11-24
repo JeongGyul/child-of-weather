@@ -1,13 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%
-    // 세션에서 로그인 여부 확인
-    String loginId = (String) session.getAttribute("loginId");
-    if (loginId == null) {
-        // 로그인 안 되어 있으면 index.jsp(라우터)로 보내기
-        response.sendRedirect("index.jsp");
-        return;
-    }
-%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,7 +7,7 @@
     <title>날씨의 아이 - 대시보드</title>
 
     <!-- 외부 CSS 연결 -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/main.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/dashboard.css">
 </head>
 <body>
 <div class="app-root">
