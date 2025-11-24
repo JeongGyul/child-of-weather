@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -7,7 +9,7 @@
     <title>날씨의 아이 - 대시보드</title>
 
     <!-- 외부 CSS 연결 -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/dashboard.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
 </head>
 <body>
 <div class="app-root">
@@ -22,11 +24,13 @@
             </div>
         </div>
         <div class="app-header-right">
-            <div class="user-badge-circle">관</div>
+            <div class="user-badge-circle">
+   		 		${fn:substring(sessionScope.loginUser.name, 0, 1)}
+			</div>
             <div class="user-info">
-                <span class="role">관리자</span>
-                <span class="region">경북</span>
-            </div>
+    			<span class="name">${sessionScope.loginUser.name}</span>
+    			<span class="region">경북</span>
+			</div>
         </div>
     </header>
 
@@ -173,7 +177,7 @@
     </main>
 
     <footer class="footer">
-        © 2025 날씨의 아이
+        © 2025 날씨의 아이. All rights reserved.
     </footer>
 
 </div>
