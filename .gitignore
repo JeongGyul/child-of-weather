@@ -4,7 +4,6 @@ apache-tomcat-*/
 # Eclipse 프로젝트/빌드 관련
 .classpath
 .project
-.settings/
 bin/
 target/
 build/
