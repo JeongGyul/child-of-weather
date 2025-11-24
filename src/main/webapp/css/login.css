@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/* login.css */
+
+/* 탭 내용 숨기기/보이기 */
+.tab-content {
+    display: none;
+}
+
+/* 활성화된 탭 내용 (애니메이션 추가) */
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 탭 버튼 활성화 스타일 */
+.tab-btn.active {
+    background-color: white;
+    color: black;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 부드러운 등장 효과 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

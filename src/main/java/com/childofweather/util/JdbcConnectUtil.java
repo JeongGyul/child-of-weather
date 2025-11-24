@@ -15,9 +15,9 @@ public class JdbcConnectUtil {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // ⚠️ 네 DB 환경에 맞게 수정
-            String url = "jdbc:mysql://localhost:3306/childweather?serverTimezone=Asia/Seoul";
+            String url = "jdbc:mysql://localhost:3306/project";
             String user = "root";
-            String password = "1234";
+            String password = "0000";
 
             conn = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException e) {

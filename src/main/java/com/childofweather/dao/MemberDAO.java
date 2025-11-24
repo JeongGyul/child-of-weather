@@ -16,18 +16,18 @@ public class MemberDAO {
 
     // 로그인
     private final String USER_LOGIN =
-            "SELECT * FROM membertbl WHERE memberid = ? AND password = ?";
+            "SELECT * FROM members WHERE email = ? AND password = ?";
 
     // 회원가입
     private final String USER_INSERT =
-            "INSERT INTO membertbl(memberid, password, name, email) VALUES (?, ?, ?, ?)";
+            "INSERT INTO members(name, email, password) VALUES (?, ?, ?)";
 
     public boolean login(MemberDTO mdto) {
         boolean result = false;
         try {
             conn = JdbcConnectUtil.getConnection();
             pstmt = conn.prepareStatement(USER_LOGIN);
-            pstmt.setString(1, mdto.getMemberid());
+            pstmt.setString(1, mdto.getEmail());
             pstmt.setString(2, mdto.getPassword());
             rs = pstmt.executeQuery();
 
@@ -45,13 +45,38 @@ public class MemberDAO {
         try {
             conn = JdbcConnectUtil.getConnection();
             pstmt = conn.prepareStatement(USER_INSERT);
-            pstmt.setString(1, mdto.getMemberid());
-            pstmt.setString(2, mdto.getPassword());
-            pstmt.setString(3, mdto.getName());
-            pstmt.setString(4, mdto.getEmail());
+            pstmt.setString(1, mdto.getName());
+            pstmt.setString(2, mdto.getEmail());
+            pstmt.setString(3, mdto.getPassword());
 
             result = pstmt.executeUpdate(); // 1이면 성공
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JdbcConnectU
+        	JdbcConnectUtil.close(conn, pstmt);
+        }
+        return result;
+    }
+    
+    public MemberDTO getMember(MemberDTO loginDTO) {
+    	MemberDTO infoDTO = new MemberDTO();
+        try {
+            conn = JdbcConnectUtil.getConnection();
+            pstmt = conn.prepareStatement(USER_LOGIN);
+            pstmt.setString(1, loginDTO.getEmail());
+            pstmt.setString(2, loginDTO.getPassword());
+            rs = pstmt.executeQuery();
+            rs.next();
+            
+            infoDTO.setName(rs.getString("name"));
+            infoDTO.setEmail(rs.getString("email"));
+            infoDTO.setPassword(rs.getString("password"));
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcConnectUtil.close(conn, pstmt, rs);
+        }
+        return infoDTO;
+    }
+}
