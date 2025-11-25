@@ -38,6 +38,7 @@ public class LoginServlet extends HttpServlet {
         boolean ok = dao.login(dto);
 
         if (ok) {
+        	dao.updateLastLogin(email);
         	MemberDTO loginUser = dao.getMember(dto);
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", loginUser);

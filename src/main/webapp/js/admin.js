@@ -10,24 +10,3 @@ function confirmDelete(memberId, memberName) {
         location.href = 'deleteUser.do?id=' + memberId;
     }
 }
-
-// 2. 역할 변경 (Select Box 변경 시 즉시 반영)
-function handleRoleChange(memberId, selectElement) {
-    const newRole = selectElement.value; // 'USER' or 'ADMIN'
-    
-    if(confirm('이 회원의 권한을 변경하시겠습니까?')) {
-        // 권한 변경 서블릿 호출
-        location.href = 'updateRole.do?id=' + memberId + '&role=' + newRole;
-    } else {
-        // 취소 시 원래대로 되돌리기 (새로고침)
-        location.reload();
-    }
-}
-
-// 3. 검색 (엔터키)
-function handleSearch(event) {
-    if (event.key === 'Enter') {
-        const keyword = document.getElementById('userSearch').value;
-        location.href = 'userList.do?keyword=' + encodeURIComponent(keyword);
-    }
-}

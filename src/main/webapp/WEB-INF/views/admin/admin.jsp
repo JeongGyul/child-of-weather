@@ -47,7 +47,7 @@
                     <span class="stat-title">활성 사용자</span>
                     <span class="stat-icon">⚡</span>
                 </div>
-                <div class="stat-value">1</div> 
+                <div class="stat-value">${newJoinCount}</div> 
                 <div class="stat-desc">7일 이내 접속</div>
             </div>
         </div>
@@ -55,8 +55,6 @@
         <div class="list-card">
             <div class="list-header">
                 <div class="list-title">회원 목록</div>
-                <input type="text" id="userSearch" class="search-input" 
-                       placeholder="이름, 이메일 검색..." onkeyup="handleSearch(event)">
             </div>
 
             <table class="data-table">
@@ -77,12 +75,7 @@
                                 <span style="font-weight: 600;">${user.name}</span>
                             </td>
                             <td>${user.email}</td>
-                            <td>
-                                <select class="role-select" onchange="handleRoleChange('${user.memberId}', this)">
-                                    <option value="USER" ${user.role == 'USER' ? 'selected' : ''}>일반</option>
-                                    <option value="ADMIN" ${user.role == 'ADMIN' ? 'selected' : ''}>관리자</option>
-                                </select>
-                            </td>
+                            <td>${user.role == 'USER' ? '일반' : '관리자'}</td>
                             <td>${user.createdAt}</td>
                             <td>${user.lastLoginAt}</td>
                             <td class="text-right">
