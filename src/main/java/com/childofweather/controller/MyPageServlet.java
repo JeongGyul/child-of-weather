@@ -32,7 +32,9 @@ public class MyPageServlet extends HttpServlet {
         // 2) 마이페이지에 뿌릴 데이터 준비 (지금은 더미)
         request.setAttribute("userName", loginUser.getName());
         request.setAttribute("userEmail", loginUser.getEmail());
-        request.setAttribute("userRole", "일반 회원");
+        
+        String roleStr = "USER".equals(loginUser.getRole()) ? "일반 회원" : "관리자";
+        request.setAttribute("userRole", roleStr);
 
         request.setAttribute("currentRegion", "울산");
         request.setAttribute("joinDate", "2025년 11월 9일");
