@@ -6,7 +6,12 @@
 
 <header class="app-header">
         <div class="app-header-left">
-            <div class="app-logo">☁</div>
+            <div class="app-logo">
+			    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud">
+			        <path d="M17.5 19c0-1.7-1.3-3-3-3c-1.1 0-2.1.6-2.6 1.5c-.5-.9-1.5-1.5-2.6-1.5c-1.7 0-3 1.3-3 3"/>
+			        <path d="M3 16.6A6 6 0 0 1 12 7a6 6 0 0 1 5.6 4.4a3.5 3.5 0 0 1 2.3 6.6"/>
+			    </svg>
+			</div>
             <div class="app-title-group">
                 <h1>날씨의 아이</h1>
                 <p>똑똑한 개인 맞춤형 날씨 알림</p>
