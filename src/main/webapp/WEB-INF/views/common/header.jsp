@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+
 <header class="app-header">
         <div class="app-header-left">
             <div class="app-logo">☁</div>
