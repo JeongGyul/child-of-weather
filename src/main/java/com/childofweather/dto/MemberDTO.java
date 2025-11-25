@@ -1,5 +1,7 @@
 package com.childofweather.dto;
 
+import java.time.LocalDate;
+
 public class MemberDTO {
 
     // --- DB 컬럼 매핑 ---
@@ -17,12 +19,13 @@ public class MemberDTO {
 
     // members.role (USER / ADMIN 등)
     private String role;
+    
+    // members.created_at (가입일)
+    private LocalDate createdAt;
+    
+    // members.created_at (가입일)
+    private LocalDate lastLoginAt;
 
-    // --- 기본 생성자 ---
-    public MemberDTO() {
-    }
-
-    // --- getter / setter ---
 
     public Long getMemberId() {
         return memberId;
@@ -63,4 +66,20 @@ public class MemberDTO {
     public void setRole(String role) {
         this.role = role;
     }
+
+	public LocalDate getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDate createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDate getLastLoginAt() {
+		return lastLoginAt;
+	}
+
+	public void setLastLoginAt(LocalDate lastLoginAt) {
+		this.lastLoginAt = lastLoginAt;
+	}
 }

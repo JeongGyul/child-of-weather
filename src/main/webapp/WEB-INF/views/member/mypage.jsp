@@ -89,14 +89,14 @@
                     <div class="space-y-1">
                         <div class="text-gray-400">가입일</div>
                         <div class="font-medium">
-                            <c:out value="${empty joinDate ? '-' : joinDate}"/>
+                            <c:out value="${sessionScope.loginUser.createdAt}"/>
                         </div>
                     </div>
 
                     <div class="space-y-1">
                         <div class="text-gray-400">마지막 로그인</div>
                         <div class="font-medium">
-                            <c:out value="${empty lastLoginDate ? '-' : lastLoginDate}"/>
+                            <c:out value="${sessionScope.loginUser.lastLoginAt}"/>
                         </div>
                     </div>
                 </div>
