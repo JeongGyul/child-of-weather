@@ -114,6 +114,7 @@ body {
     color: #4b5563;
     text-align: center;
     cursor: default;
+    text-decoration: none;
 }
 
 .tab-item.active {

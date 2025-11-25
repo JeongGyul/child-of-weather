@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지 - 날씨의 아이</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
     <!-- Tailwind CDN (개발용) -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
