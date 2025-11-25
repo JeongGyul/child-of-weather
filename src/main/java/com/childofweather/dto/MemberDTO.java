@@ -2,35 +2,10 @@ package com.childofweather.dto;
 
 public class MemberDTO {
 
-    // --- DB 컬럼 매핑 ---
-    // members.member_id (PK)
-    private Long memberId;
-
-    // members.name
     private String name;
-
-    // members.email (로그인 ID, UNIQUE)
     private String email;
-
-    // members.password
     private String password;
-
-    // members.role (USER / ADMIN 등)
-    private String role;
-
-    // --- 기본 생성자 ---
-    public MemberDTO() {
-    }
-
-    // --- getter / setter ---
-
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
-    }
+    private String role; // ✅ 관리자 여부 확인용 (USER / ADMIN)
 
     public String getName() {
         return name;

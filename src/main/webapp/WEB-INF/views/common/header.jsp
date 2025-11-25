@@ -46,11 +46,13 @@
         	class="tab-item ${param.activeMenu == 'my' ? 'active' : ''}">마이
         </a>
         
-        <c:if test="${sessionScope.loginUser.role == 'ADMIN'}">
-            <a href="${pageContext.request.contextPath}/admin.do" 
-               class="tab-item ${param.activeMenu == 'admin' ? 'active' : ''}">
-               관리자
-            </a>
-        </c:if>
+        <c:if test="${not empty sessionScope.loginUser 
+             and sessionScope.loginUser.role eq 'ADMIN'}">
+   			 <a href="${pageContext.request.contextPath}/admin.do" 
+      			 class="tab-item ${param.activeMenu == 'admin' ? 'active' : ''}">
+       			관리자
+   			 </a>
+		</c:if>
+
     </div>
 </nav>
