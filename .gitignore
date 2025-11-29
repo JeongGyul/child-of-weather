@@ -3,9 +3,15 @@ apache-tomcat-*/
 
 # Eclipse 프로젝트/빌드 관련
 .classpath
+.project
+.settings/
 bin/
 target/
 build/
+
+# IntelliJ
+.idea/
+*.iml
 
 # 로그/임시 폴더
 logs/
@@ -13,7 +19,6 @@ temp/
 work/
 
 # IDE
-.idea/
 .vscode/
 
 # OS
