@@ -28,7 +28,7 @@
                 <div class="cw-left-temp">
                     <div class="cw-temp-value">18°</div>
                 </div>
-                <div class="cw-condition">맑음</div>
+                <div class="cw-condition">흐림</div>
                 <div class="cw-left-sub">오늘도 맑은 하루가 예상됩니다.</div>
             </div>
             <div class="cw-right">
@@ -111,38 +111,10 @@
                     <h2 class="section-title" style="margin-top:0;">시간별 예보</h2>
                     <p>오늘의 날씨 변화</p>
                 </div>
-                <div class="hourly-row">
-                    <div class="hour-item">
-                        <div class="hour-time">09:00</div>
-                        <div class="hour-icon">☀</div>
-                        <div class="hour-temp">16°</div>
-                        <div class="hour-pop">0%</div>
-                    </div>
-                    <div class="hour-item">
-                        <div class="hour-time">12:00</div>
-                        <div class="hour-icon">☀</div>
-                        <div class="hour-temp">20°</div>
-                        <div class="hour-pop">0%</div>
-                    </div>
-                    <div class="hour-item">
-                        <div class="hour-time">15:00</div>
-                        <div class="hour-icon">☀</div>
-                        <div class="hour-temp">22°</div>
-                        <div class="hour-pop">5%</div>
-                    </div>
-                    <div class="hour-item">
-                        <div class="hour-time">18:00</div>
-                        <div class="hour-icon">🌧</div>
-                        <div class="hour-temp">18°</div>
-                        <div class="hour-pop">10%</div>
-                    </div>
-                    <div class="hour-item">
-                        <div class="hour-time">21:00</div>
-                        <div class="hour-icon">🌧</div>
-                        <div class="hour-temp">15°</div>
-                        <div class="hour-pop">20%</div>
-                    </div>
+                <div class="hourly-row" id="hourly-row">
+                    <!-- JS에서 시간별 예보 아이템을 동적으로 채움 -->
                 </div>
+
             </div>
         </section>
 
@@ -151,6 +123,11 @@
     <footer class="footer">
         © 2025 날씨의 아이. All rights reserved.
     </footer>
+    <script>
+        // 컨텍스트 경로를 JS에서 쓸 수 있게 전역으로 노출
+        window.appContextPath = '${pageContext.request.contextPath}';
+    </script>
+    <script src="${pageContext.request.contextPath}/js/dashboard.js"></script>
 
 </div>
 </body>

@@ -23,3 +23,6 @@ work/
 
 # OS
 .DS_Store
+
+# DB 파일
+src/main/resources/db.properties
