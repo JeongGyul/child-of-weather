@@ -27,8 +27,6 @@ public class JdbcConnectUtil {
 	    }
 	}
 
-    private static final Properties properties = new Properties();
-
     // db.properties 로딩
     static {
         try (InputStream input = JdbcConnectUtil.class
