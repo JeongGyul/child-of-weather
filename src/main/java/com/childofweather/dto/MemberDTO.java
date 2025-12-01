@@ -1,10 +1,15 @@
 package com.childofweather.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDTO {
 
-    // --- DB 컬럼 매핑 ---
+    // --- members 테이블 매핑 ---
+
     // members.member_id (PK)
     private Long memberId;
 
@@ -23,9 +28,16 @@ public class MemberDTO {
     // members.created_at (가입일)
     private LocalDate createdAt;
     
-    // members.created_at (가입일)
+    // members.last_login_at (최근 로그인 일자)
     private LocalDate lastLoginAt;
 
+
+    // --- member_activities 연관 데이터 (1:N) ---
+    // 이 회원이 등록한 활동 목록
+    private List<MemberActivity> activities = new ArrayList<>();
+
+
+    // ====== members getter / setter ======
 
     public Long getMemberId() {
         return memberId;
@@ -82,4 +94,168 @@ public class MemberDTO {
 	public void setLastLoginAt(LocalDate lastLoginAt) {
 		this.lastLoginAt = lastLoginAt;
 	}
+
+    // ====== activities getter / setter ======
+
+    public List<MemberActivity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<MemberActivity> activities) {
+        this.activities = activities;
+    }
+
+    public void addActivity(MemberActivity activity) {
+        if (this.activities == null) {
+            this.activities = new ArrayList<>();
+        }
+        this.activities.add(activity);
+    }
+
+    // =====================================================
+    //  내부 클래스: member_activities 테이블 매핑용 DTO
+    //  (별도 파일 안 만들고 MemberDTO 안에 포함)
+    // =====================================================
+
+    public static class MemberActivity {
+
+        // member_activities.member_activity_id (PK)
+        private Long memberActivityId;
+
+        // member_activities.member_id (FK → members.member_id)
+        private Long memberId;
+
+        // member_activities.activity_type_id (FK → activity_types.activity_type_id)
+        private Long activityTypeId;
+
+        // 날씨 조건
+        private Integer minTemperature;
+        private Integer maxTemperature;
+        private Integer maxHumidity;
+        private Integer maxPrecipitation;
+
+        // 추천 타이밍
+        private LocalDate recommendationDate;
+        private LocalTime recommendationStartTime;
+        private LocalTime recommendationEndTime;
+        private String timingStatus; // BEST_NOW / PLANNED / ENDED
+
+        private LocalDateTime lastCalculatedAt;
+
+        // 생성/수정 일시
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+
+        public Long getMemberActivityId() {
+            return memberActivityId;
+        }
+
+        public void setMemberActivityId(Long memberActivityId) {
+            this.memberActivityId = memberActivityId;
+        }
+
+        public Long getMemberId() {
+            return memberId;
+        }
+
+        public void setMemberId(Long memberId) {
+            this.memberId = memberId;
+        }
+
+        public Long getActivityTypeId() {
+            return activityTypeId;
+        }
+
+        public void setActivityTypeId(Long activityTypeId) {
+            this.activityTypeId = activityTypeId;
+        }
+
+        public Integer getMinTemperature() {
+            return minTemperature;
+        }
+
+        public void setMinTemperature(Integer minTemperature) {
+            this.minTemperature = minTemperature;
+        }
+
+        public Integer getMaxTemperature() {
+            return maxTemperature;
+        }
+
+        public void setMaxTemperature(Integer maxTemperature) {
+            this.maxTemperature = maxTemperature;
+        }
+
+        public Integer getMaxHumidity() {
+            return maxHumidity;
+        }
+
+        public void setMaxHumidity(Integer maxHumidity) {
+            this.maxHumidity = maxHumidity;
+        }
+
+        public Integer getMaxPrecipitation() {
+            return maxPrecipitation;
+        }
+
+        public void setMaxPrecipitation(Integer maxPrecipitation) {
+            this.maxPrecipitation = maxPrecipitation;
+        }
+
+        public LocalDate getRecommendationDate() {
+            return recommendationDate;
+        }
+
+        public void setRecommendationDate(LocalDate recommendationDate) {
+            this.recommendationDate = recommendationDate;
+        }
+
+        public LocalTime getRecommendationStartTime() {
+            return recommendationStartTime;
+        }
+
+        public void setRecommendationStartTime(LocalTime recommendationStartTime) {
+            this.recommendationStartTime = recommendationStartTime;
+        }
+
+        public LocalTime getRecommendationEndTime() {
+            return recommendationEndTime;
+        }
+
+        public void setRecommendationEndTime(LocalTime recommendationEndTime) {
+            this.recommendationEndTime = recommendationEndTime;
+        }
+
+        public String getTimingStatus() {
+            return timingStatus;
+        }
+
+        public void setTimingStatus(String timingStatus) {
+            this.timingStatus = timingStatus;
+        }
+
+        public LocalDateTime getLastCalculatedAt() {
+            return lastCalculatedAt;
+        }
+
+        public void setLastCalculatedAt(LocalDateTime lastCalculatedAt) {
+            this.lastCalculatedAt = lastCalculatedAt;
+        }
+
+        public LocalDateTime getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+        }
+
+        public LocalDateTime getUpdatedAt() {
+            return updatedAt;
+        }
+
+        public void setUpdatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+        }
+    }
 }

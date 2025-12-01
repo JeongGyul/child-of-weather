@@ -17,6 +17,8 @@ public class AdminServlet extends HttpServlet {
 	
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	System.out.println(">>> ActivityServlet.doPost() 진입");
+
     	request.setCharacterEncoding("UTF-8");
     	
         MemberDAO dao = new MemberDAO();
