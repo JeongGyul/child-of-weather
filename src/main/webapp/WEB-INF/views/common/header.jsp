@@ -35,7 +35,7 @@
            대시보드
         </a>
         
-        <a href="${pageContext.request.contextPath}/activity/list.do" 
+        <a href="${pageContext.request.contextPath}/activity.do" 
            class="tab-item ${param.activeMenu == 'activity' ? 'active' : ''}">
            활동
         </a>
