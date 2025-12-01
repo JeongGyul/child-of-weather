@@ -10,6 +10,22 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class JdbcConnectUtil {
+	
+	private static final Properties properties = new Properties();
+
+	static {
+	    try (InputStream input = JdbcConnectUtil.class.getClassLoader().getResourceAsStream("db.properties")) {
+	        if (input == null) {
+	            // 파일을 찾지 못하면 에러 발생
+	            System.out.println("Sorry, unable to find db.properties");
+	            throw new FileNotFoundException("db.properties 파일을 찾을 수 없습니다.");
+	        }
+	        // db.properties 파일 내용을 로드
+	        properties.load(input);
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	}
 
     private static final Properties properties = new Properties();
 
