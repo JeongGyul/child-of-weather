@@ -27,24 +27,6 @@ public class JdbcConnectUtil {
 	    }
 	}
 
-    // db.properties 로딩
-    static {
-        try (InputStream input = JdbcConnectUtil.class
-                .getClassLoader()
-                .getResourceAsStream("db.properties")) {
-
-            if (input == null) {
-                System.out.println("Sorry, unable to find db.properties");
-                throw new FileNotFoundException("db.properties 파일을 찾을 수 없습니다.");
-            }
-
-            properties.load(input);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    // ✅ 이 메서드를 네가 보낸 코드로 교체한 최종 버전
     public static Connection getConnection() {
         try {
             // MySQL 드라이버 로드
