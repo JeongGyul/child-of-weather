@@ -91,35 +91,39 @@ public class WeatherServlet extends HttpServlet {
             java.util.List<HourlyForecast> hourly = parseVilageFcstXml(xmlVilage, today);
 
             // ============================
-            // ★★★ 3시간 간격 시간 필터링 추가 ★★★
+            // ★★★ 현재시간 기준 +3시간부터 4개 선택 ★★★
             // ============================
 
             // 현재 시간
-            int nowHour = java.time.LocalDateTime
-                    .now(java.time.ZoneId.of("Asia/Seoul"))
-                    .getHour();
+            int nowHour = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getHour();
 
-            // 3시간 간격 후보 시간 생성
-            java.util.Set<String> targetTimes = new java.util.LinkedHashSet<>();
-            for (int h = nowHour; h <= nowHour + 12; h += 3) {
-                int hour = h % 24;  // 24 넘어가면 0~ 처리
-                String key = String.format("%02d00", hour);  // "0900"
-                targetTimes.add(key);
+            // 우리가 출력하고 싶은 시간대 (4개)
+            java.util.List<String> targetTimeKeys = new java.util.ArrayList<>();
+
+            for (int i = 1; i <= 5; i++) {
+                int hour = (nowHour + (i)) % 24; // 3시간 뒤, 6시간 뒤...
+                targetTimeKeys.add(String.format("%02d00", hour)); // "1600", "1900" ...
             }
 
-            // hourly 리스트 필터링
+            // hourly에서 해당 시간대만 추출
             java.util.List<HourlyForecast> filtered = new java.util.ArrayList<>();
-            for (HourlyForecast hf : hourly) {
-                // "09:00" → "0900"
-                if (hf.time != null && hf.time.length() >= 2) {
-                    String timeKey = hf.time.substring(0, 2) + "00";
-                    if (targetTimes.contains(timeKey)) {
-                        filtered.add(hf);
+
+            for (String key : targetTimeKeys) {
+                for (HourlyForecast hf : hourly) {
+                    if (hf.time != null && hf.time.length() >= 2) {
+                        // "16:00" → "1600"
+                        String timeKey = hf.time.substring(0, 2) + "00";
+                        if (timeKey.equals(key)) {
+                            filtered.add(hf);
+                            break; // 같은 시간대 겹치지 않음
+                        }
                     }
                 }
             }
 
-            hourly = filtered; // filtered 리스트로 교체
+            hourly = filtered;
+
+            // ============================
 
             // ============================
 
