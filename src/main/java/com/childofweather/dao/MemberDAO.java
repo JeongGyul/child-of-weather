@@ -83,7 +83,7 @@ public class MemberDAO {
 
     // ================= 로그인, 회원 관리 =====================
 
-    public boolean login(MemberDTO mdto) {
+    public boolean login(MemberDTO.LoginRequest mdto) {
         boolean result = false;
         try {
             conn = JdbcConnectUtil.getConnection();
@@ -101,7 +101,7 @@ public class MemberDAO {
         return result;
     }
 
-    public int insert(MemberDTO mdto) {
+    public Boolean insert(MemberDTO.JoinRequest mdto) {
         int result = 0;
         try {
             conn = JdbcConnectUtil.getConnection();
@@ -116,25 +116,24 @@ public class MemberDAO {
         } finally {
             JdbcConnectUtil.close(conn, pstmt);
         }
-        return result;
+        return result == 1;
     }
 
-    public MemberDTO getMember(MemberDTO loginDTO) {
-        MemberDTO infoDTO = new MemberDTO();
+    public MemberDTO.InfoResponse getMember(MemberDTO.LoginRequest dto) {
+        MemberDTO.InfoResponse infoDTO = new MemberDTO.InfoResponse();
         try {
             conn = JdbcConnectUtil.getConnection();
             pstmt = conn.prepareStatement(USER_LOGIN);
-            pstmt.setString(1, loginDTO.getEmail());
-            pstmt.setString(2, loginDTO.getPassword());
+            pstmt.setString(1, dto.getEmail());
+            pstmt.setString(2, dto.getPassword());
             rs = pstmt.executeQuery();
             if (rs.next()) {
+            	infoDTO.setMemberId(rs.getLong("member_id"));
+            	infoDTO.setEmail(rs.getString("email"));
                 infoDTO.setName(rs.getString("name"));
-                infoDTO.setEmail(rs.getString("email"));
-                infoDTO.setPassword(rs.getString("password"));
                 infoDTO.setRole(rs.getString("role"));
                 infoDTO.setCreatedAt(rs.getObject("created_at", LocalDate.class));
                 infoDTO.setLastLoginAt(rs.getObject("last_login_at", LocalDate.class));
-                infoDTO.setMemberId(rs.getLong("member_id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -144,13 +143,13 @@ public class MemberDAO {
         return infoDTO;
     }
 
-    public int updateProfile(String originalEmail, MemberDTO mdto) {
+    public int updateProfile(String originalEmail, MemberDTO.MyPageEditRequest dto) {
         int result = 0;
         try {
             conn = JdbcConnectUtil.getConnection();
             pstmt = conn.prepareStatement(USER_UPDATE_PROFILE);
-            pstmt.setString(1, mdto.getName());
-            pstmt.setString(2, mdto.getEmail());
+            pstmt.setString(1, dto.getName());
+            pstmt.setString(2, dto.getEmail());
             pstmt.setString(3, originalEmail);
 
             result = pstmt.executeUpdate();
@@ -162,15 +161,15 @@ public class MemberDAO {
         return result;
     }
 
-    public List<MemberDTO> getAllMembers() {
-        List<MemberDTO> list = new ArrayList<>();
+    public List<MemberDTO.InfoResponse> getAllMembers() {
+        List<MemberDTO.InfoResponse> list = new ArrayList<>();
         try {
             conn = JdbcConnectUtil.getConnection();
             pstmt = conn.prepareStatement(USER_FIND_ALL);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                MemberDTO dto = new MemberDTO();
+                MemberDTO.InfoResponse dto = new MemberDTO.InfoResponse();
                 dto.setName(rs.getString("name"));
                 dto.setEmail(rs.getString("email"));
                 dto.setRole(rs.getString("role"));

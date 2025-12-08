@@ -1,4 +1,4 @@
-package com.childofweather.controller;
+package com.childofweather.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +22,7 @@ public class AdminServlet extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
     	
         MemberDAO dao = new MemberDAO();
-        List<MemberDTO> userList = dao.getAllMembers();
+        List<MemberDTO.InfoResponse> userList = dao.getAllMembers();
         int totalUsers = userList.size();
         int adminCount = dao.getAdminCount();
         int userCount = dao.getUserCount();

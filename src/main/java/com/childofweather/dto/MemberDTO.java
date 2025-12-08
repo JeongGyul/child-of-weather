@@ -7,93 +7,161 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDTO {
-
-    // --- members 테이블 매핑 ---
-
-    // members.member_id (PK)
-    private Long memberId;
-
-    // members.name
-    private String name;
-
-    // members.email (로그인 ID, UNIQUE)
-    private String email;
-
-    // members.password
-    private String password;
-
-    // members.role (USER / ADMIN 등)
-    private String role;
-    
-    // members.created_at (가입일)
-    private LocalDate createdAt;
-    
-    // members.last_login_at (최근 로그인 일자)
-    private LocalDate lastLoginAt;
-
+	
+	// 회원가입용 (JoinServlet에서 사용)
+	public static class JoinRequest {
+		private String email;
+		private String password;
+		private String name;
+		
+		public String getEmail() {
+			return email;
+		}
+		public void setEmail(String email) {
+			this.email = email;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
+	
+	// 로그인용 (LoginServlet에서 사용)
+	public static class LoginRequest {
+		private String email;
+		private String password;
+		
+		public String getEmail() {
+			return email;
+		}
+		public void setEmail(String email) {
+			this.email = email;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+	}
+	
+	// 마이페이지에서 이름, 이메일 수정용 (MyPageEditServlet에서 사용)
+	public static class MyPageEditRequest {
+		private String name;
+		private String email;
+		
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getEmail() {
+			return email;
+		}
+		public void setEmail(String email) {
+			this.email = email;
+		}
+	}
+	
+	// 세션 저장 및 마이페이지 출력용 (LoginServlet, MyPageServlet에서 사용)
+	public static class InfoResponse {
+		private Long memberId;
+		private String email;
+		private String name;
+		private String role;
+		private LocalDate createdAt;
+		private LocalDate lastLoginAt;
+		
+		public Long getMemberId() {
+			return memberId;
+		}
+		public void setMemberId(Long memberId) {
+			this.memberId = memberId;
+		}
+		public String getEmail() {
+			return email;
+		}
+		public void setEmail(String email) {
+			this.email = email;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getRole() {
+			return role;
+		}
+		// 화면 출력용 한글 변환 메서드
+		public String getRoleLabel() {
+			if("USER".equals(this.role)) {
+				return "일반 유저";
+			}
+			return "관리자";
+		}
+		public void setRole(String role) {
+			this.role = role;
+		}
+		public LocalDate getCreatedAt() {
+			return createdAt;
+		}
+		public void setCreatedAt(LocalDate createdAt) {
+			this.createdAt = createdAt;
+		}
+		public LocalDate getLastLoginAt() {
+			return lastLoginAt;
+		}
+		public void setLastLoginAt(LocalDate lastLoginAt) {
+			this.lastLoginAt = lastLoginAt;
+		}
+	}
+	
+	// 마이페이지 출력용 (MyPageServlet에서 사용)
+	public static class MyPageInfoResponse {
+		private MemberDTO.InfoResponse memberInfo;
+		private int activityCount;
+		private int routeCount;
+		private int alertCount;
+		
+		public MemberDTO.InfoResponse getMemberInfo() {
+			return memberInfo;
+		}
+		public void setMemberInfo(MemberDTO.InfoResponse memberInfo) {
+			this.memberInfo = memberInfo;
+		}
+		public int getActivityCount() {
+			return activityCount;
+		}
+		public void setActivityCount(int activityCount) {
+			this.activityCount = activityCount;
+		}
+		public int getRouteCount() {
+			return routeCount;
+		}
+		public void setRouteCount(int routeCount) {
+			this.routeCount = routeCount;
+		}
+		public int getAlertCount() {
+			return alertCount;
+		}
+		public void setAlertCount(int alertCount) {
+			this.alertCount = alertCount;
+		}
+	}
 
     // --- member_activities 연관 데이터 (1:N) ---
     // 이 회원이 등록한 활동 목록
     private List<MemberActivity> activities = new ArrayList<>();
-
-
-    // ====== members getter / setter ======
-
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-	public LocalDate getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDate createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDate getLastLoginAt() {
-		return lastLoginAt;
-	}
-
-	public void setLastLoginAt(LocalDate lastLoginAt) {
-		this.lastLoginAt = lastLoginAt;
-	}
 
     // ====== activities getter / setter ======
 

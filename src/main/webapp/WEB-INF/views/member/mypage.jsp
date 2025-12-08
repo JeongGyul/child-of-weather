@@ -25,23 +25,16 @@
             <!-- 프로필 왼쪽 -->
             <div class="flex flex-col items-center border rounded-2xl p-6 bg-slate-50">
                 <div class="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white text-3xl font-semibold mb-4">
-                    <c:choose>
-                        <c:when test="${not empty userName}">
-                            ${fn:substring(userName, 0, 1)}
-                        </c:when>
-                        <c:otherwise>
-                            유
-                        </c:otherwise>
-                    </c:choose>
+                    <c:out value="${fn:substring(myPageInfo.memberInfo.name, 0, 1)}"/>
                 </div>
                 <div class="text-lg font-semibold mb-1">
-                    <c:out value="${empty userName ? '사용자' : userName}"/>
+                    <c:out value="${myPageInfo.memberInfo.name}"/>
                 </div>
                 <div class="text-gray-500 text-sm mb-2">
-                    <c:out value="${empty userEmail ? 'user@weather.com' : userEmail}"/>
+                    <c:out value="${myPageInfo.memberInfo.email}"/>
                 </div>
                 <span class="px-3 py-1 text-xs rounded-full bg-slate-200 text-gray-700">
-                    <c:out value="${empty userRole ? '일반 회원' : userRole}"/>
+                    <c:out value="${myPageInfo.memberInfo.roleLabel}"/>
                 </span>
             </div>
 
@@ -64,13 +57,13 @@
                     <div class="space-y-1">
                         <div class="text-gray-400">이름</div>
                         <div class="font-medium">
-                            <c:out value="${empty userName ? '사용자' : userName}"/>
+                            <c:out value="${myPageInfo.memberInfo.name}"/>
                         </div>
                     </div>
                     <div class="space-y-1">
                         <div class="text-gray-400">이메일</div>
                         <div class="font-medium">
-                            <c:out value="${empty userEmail ? 'user@weather.com' : userEmail}"/>
+                            <c:out value="${myPageInfo.memberInfo.email}"/>
                         </div>
                     </div>
 
@@ -78,7 +71,7 @@
                         <div class="text-gray-400">현재 접속 지역</div>
                         <div class="flex items-center justify-between">
                             <span class="font-medium">
-                                <c:out value="${empty currentRegion ? '미설정' : currentRegion}"/>
+                                <c:out value="서울"/>
                             </span>
                             <button class="text-xs text-blue-600 border border-blue-100 px-2 py-1 rounded-full">
                                 자동 감지
@@ -89,14 +82,14 @@
                     <div class="space-y-1">
                         <div class="text-gray-400">가입일</div>
                         <div class="font-medium">
-                            <c:out value="${sessionScope.loginUser.createdAt}"/>
+                            <c:out value="${myPageInfo.memberInfo.createdAt}"/>
                         </div>
                     </div>
 
                     <div class="space-y-1">
                         <div class="text-gray-400">마지막 로그인</div>
                         <div class="font-medium">
-                            <c:out value="${sessionScope.loginUser.lastLoginAt}"/>
+                            <c:out value="${myPageInfo.memberInfo.lastLoginAt}"/>
                         </div>
                     </div>
                 </div>
@@ -112,19 +105,19 @@
                 <div class="rounded-2xl bg-blue-50 p-6 text-center">
                     <div class="text-sm text-gray-500 mb-2">등록된 활동</div>
                     <div class="text-3xl font-bold">
-                        <c:out value="${empty activityCount ? 0 : activityCount}"/>
+                        <c:out value="${myPageInfo.activityCount}"/>
                     </div>
                 </div>
                 <div class="rounded-2xl bg-green-50 p-6 text-center">
                     <div class="text-sm text-gray-500 mb-2">등록된 경로</div>
                     <div class="text-3xl font-bold">
-                        <c:out value="${empty routeCount ? 0 : routeCount}"/>
+                        <c:out value="${myPageInfo.routeCount}"/>
                     </div>
                 </div>
                 <div class="rounded-2xl bg-purple-50 p-6 text-center">
                     <div class="text-sm text-gray-500 mb-2">받은 알림</div>
                     <div class="text-3xl font-bold">
-                        <c:out value="${empty alertCount ? 0 : alertCount}"/>
+                        <c:out value="${myPageInfo.alertCount}"/>
                     </div>
                 </div>
             </div>

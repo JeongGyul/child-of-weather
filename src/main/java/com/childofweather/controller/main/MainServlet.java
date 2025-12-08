@@ -1,4 +1,4 @@
-package com.childofweather.controller;
+package com.childofweather.controller.main;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

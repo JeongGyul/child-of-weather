@@ -1,4 +1,4 @@
-package com.childofweather.controller;
+package com.childofweather.controller.activity;
 
 import com.childofweather.dao.MemberDAO;
 import com.childofweather.dto.MemberDTO;
@@ -24,8 +24,8 @@ public class ActivityDeleteServlet extends HttpServlet {
         System.out.println(">>> [ActivityDeleteServlet] doPost() 진입");
 
         HttpSession session = request.getSession(false);
-        MemberDTO loginUser = (session != null)
-                ? (MemberDTO) session.getAttribute("loginUser")
+        MemberDTO.InfoResponse loginUser = (session != null)
+                ? (MemberDTO.InfoResponse) session.getAttribute("loginUser")
                 : null;
 
         if (loginUser == null) {

@@ -1,7 +1,9 @@
-package com.childofweather.controller;
+package com.childofweather.controller.member;
 
 import com.childofweather.dao.MemberDAO;
 import com.childofweather.dto.MemberDTO;
+import com.childofweather.service.MemberService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,6 +15,8 @@ import java.io.IOException;
 
 @WebServlet("/login.do")
 public class LoginServlet extends HttpServlet {
+	
+	private MemberService memberService = new MemberService();
 	
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -30,16 +34,13 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        MemberDTO dto = new MemberDTO();
-        dto.setEmail(email);
-        dto.setPassword(password);
+        MemberDTO.LoginRequest loginDTO = new MemberDTO.LoginRequest();
+        loginDTO.setEmail(email);
+        loginDTO.setPassword(password);
 
-        MemberDAO dao = new MemberDAO();
-        boolean ok = dao.login(dto);
+        MemberDTO.InfoResponse loginUser = memberService.login(loginDTO);
 
-        if (ok) {
-        	dao.updateLastLogin(email);
-        	MemberDTO loginUser = dao.getMember(dto);
+        if (loginUser != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", loginUser);
 

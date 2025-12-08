@@ -1,7 +1,9 @@
-package com.childofweather.controller;
+package com.childofweather.controller.member;
 
 import com.childofweather.dao.MemberDAO;
 import com.childofweather.dto.MemberDTO;
+import com.childofweather.service.MemberService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,6 +14,8 @@ import java.io.IOException;
 
 @WebServlet("/join.do")
 public class JoinServlet extends HttpServlet {
+	
+	private MemberService memberService = new MemberService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -23,22 +27,20 @@ public class JoinServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        MemberDTO dto = new MemberDTO();
-        dto.setName(name);
-        dto.setEmail(email);
-        dto.setPassword(password); 
+        MemberDTO.JoinRequest joinDTO = new MemberDTO.JoinRequest();
+        joinDTO.setName(name);
+        joinDTO.setEmail(email);
+        joinDTO.setPassword(password); 
 
-        MemberDAO dao = new MemberDAO();
-        int result = dao.insert(dto);
+        Boolean isSuccess = memberService.join(joinDTO);
 
-        if (result == 1) {
+        if (isSuccess) {
         	request.setAttribute("successMessage", "회원가입이 완료되었습니다!");
-            request.getRequestDispatcher("/WEB-INF/views/member/login_register.jsp")
-                   .forward(request, response);
         } else {
         	request.setAttribute("error", "회원가입에 실패했습니다.");
-        	request.getRequestDispatcher("/WEB-INF/views/member/login_register.jsp")
-            		.forward(request, response);
         }
+        
+        request.getRequestDispatcher("/WEB-INF/views/member/login_register.jsp")
+        .forward(request, response);
     }
 }
