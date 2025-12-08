@@ -37,8 +37,6 @@ public class JdbcConnectUtil {
             String user = properties.getProperty("db.username");
             String password = properties.getProperty("db.password");
 
-            System.out.println("[DB] url=" + url + ", user=" + user); // 디버그용
-
             // DB 연결 시도
             return DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException e) {

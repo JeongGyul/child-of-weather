@@ -1,7 +1,7 @@
 package com.childofweather.controller.activity;
 
-import com.childofweather.dao.MemberDAO;
 import com.childofweather.dto.MemberDTO;
+import com.childofweather.service.ActivityService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,13 +15,11 @@ import java.io.IOException;
 @WebServlet("/activity/delete.do")
 public class ActivityDeleteServlet extends HttpServlet {
 
-    private final MemberDAO memberDAO = new MemberDAO();
+    private ActivityService activityService = new ActivityService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        System.out.println(">>> [ActivityDeleteServlet] doPost() 진입");
 
         HttpSession session = request.getSession(false);
         MemberDTO.InfoResponse loginUser = (session != null)
@@ -29,23 +27,15 @@ public class ActivityDeleteServlet extends HttpServlet {
                 : null;
 
         if (loginUser == null) {
-            System.out.println(">>> [ActivityDeleteServlet] loginUser == null -> /login.do 리다이렉트");
             response.sendRedirect(request.getContextPath() + "/login.do");
             return;
         }
-
-        String idStr = request.getParameter("memberActivityId");
-        if (idStr != null && !idStr.isBlank()) {
-            long memberActivityId = Long.parseLong(idStr);
-            long memberId = loginUser.getMemberId();
-
-            int rows = memberDAO.deleteMemberActivity(memberActivityId, memberId);
-            System.out.println(">>> [ActivityDeleteServlet] delete rows = " + rows);
-        } else {
-            System.out.println(">>> [ActivityDeleteServlet] memberActivityId 파라미터 없음");
-        }
-
-        // 다시 목록으로
+        
+        long memberActivityId = Long.parseLong(request.getParameter("memberActivityId"));
+        long memberId = loginUser.getMemberId();
+        
+        activityService.deleteMemberActivity(memberActivityId, memberId);
+       
         response.sendRedirect(request.getContextPath() + "/activity.do");
     }
 }

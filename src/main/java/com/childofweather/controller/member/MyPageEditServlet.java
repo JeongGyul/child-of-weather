@@ -1,6 +1,5 @@
 package com.childofweather.controller.member;
 
-import com.childofweather.dao.MemberDAO;
 import com.childofweather.dto.MemberDTO;
 import com.childofweather.service.MemberService;
 

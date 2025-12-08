@@ -69,7 +69,7 @@
                         </div>
 
                         <!-- 삭제 버튼: 폼으로 감싸서 POST 요청 -->
-                        <form method="post" action="${pageContext.request.contextPath}/activity.do">
+                        <form method="post" action="${pageContext.request.contextPath}/activity/delete.do">
                             <input type="hidden" name="op" value="delete" />
                             <input type="hidden" name="memberActivityId" value="${a.memberActivityId}" />
                             <button class="icon-button" type="submit" title="삭제하기">&#128465;</button>
@@ -176,7 +176,7 @@
                     name="minTemp"
                     class="form-input"
                     placeholder="예: 15"
-                    value="${defaultConditions.minTemp}"
+                    value="15"
                 >
             </div>
 
@@ -188,7 +188,7 @@
                     name="maxTemp"
                     class="form-input"
                     placeholder="예: 30"
-                    value="${defaultConditions.maxTemp}"
+                    value="30"
                 >
             </div>
 
@@ -200,7 +200,7 @@
                     name="maxHumidity"
                     class="form-input"
                     placeholder="예: 60"
-                    value="${defaultConditions.maxHumidity}"
+                    value="60"
                 >
             </div>
 
@@ -212,7 +212,7 @@
                     name="maxPop"
                     class="form-input"
                     placeholder="예: 20"
-                    value="${defaultConditions.maxPop}"
+                    value="20"
                 >
             </div>
 
