@@ -40,10 +40,12 @@
            활동
         </a>
         
-        <a href="${pageContext.request.contextPath}/route/list.do" 
-           class="tab-item ${param.activeMenu == 'route' ? 'active' : ''}">
-           경로
-        </a>
+<!-- 기존 탭들 사이에 하나만 추가 -->
+		<a href="${pageContext.request.contextPath}/route.do"
+  		   class="tab-item ${param.activeMenu == 'route' ? 'active' : ''}">
+    		경로
+		</a>
+        
         
         <div class="tab-item ${param.activeMenu == 'notification' ? 'active' : ''}">알림</div>
         
