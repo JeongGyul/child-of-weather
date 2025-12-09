@@ -1,4 +1,4 @@
-package com.childofweather.controller;
+package com.childofweather.controller.main;
 
 import com.childofweather.util.GridAddressLoader;
 import jakarta.servlet.ServletException;
