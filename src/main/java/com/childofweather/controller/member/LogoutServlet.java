@@ -1,4 +1,4 @@
-package com.childofweather.controller;
+package com.childofweather.controller.member;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,8 +22,6 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();   // 세션 제거 = 로그아웃
         }
 
-        // 🔁 로그아웃 후 로그인 화면으로 이동
-        
         response.sendRedirect(request.getContextPath() + "/login.do");
     }
 

@@ -34,7 +34,7 @@
                     type="text"
                     id="name"
                     name="name"
-                    value="${userName}"
+                    value="${not empty newName? newName : sessionScope.loginUser.name}"
                     required
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -49,7 +49,7 @@
                     type="email"
                     id="email"
                     name="email"
-                    value="${userEmail}"
+                    value="${not empty newEmail? newEmail : sessionScope.loginUser.email}"
                     required
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />

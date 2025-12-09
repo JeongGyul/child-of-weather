@@ -29,8 +29,8 @@
                     <span class="stat-title">전체 회원</span>
                     <span class="stat-icon">👥</span>
                 </div>
-                <div class="stat-value">${totalUsers}</div>
-                <div class="stat-desc">일반 ${userCount}명 / 관리자 ${adminCount}명</div>
+                <div class="stat-value">${adminPageInfo.totalUsers}</div>
+                <div class="stat-desc">일반 ${adminPageInfo.userCount}명 / 관리자 ${adminPageInfo.adminCount}명</div>
             </div>
 
             <div class="stat-card">
@@ -38,7 +38,7 @@
                     <span class="stat-title">신규 가입</span>
                     <span class="stat-icon">📈</span>
                 </div>
-                <div class="stat-value">${newJoinCount}</div>
+                <div class="stat-value">${adminPageInfo.newJoinCount}</div>
                 <div class="stat-desc">최근 가입자</div>
             </div>
 
@@ -47,7 +47,7 @@
                     <span class="stat-title">활성 사용자</span>
                     <span class="stat-icon">⚡</span>
                 </div>
-                <div class="stat-value">${newJoinCount}</div> 
+                <div class="stat-value">${adminPageInfo.activeUserCount}</div> 
                 <div class="stat-desc">7일 이내 접속</div>
             </div>
         </div>
@@ -69,7 +69,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="user" items="${userList}">
+                    <c:forEach var="user" items="${adminPageInfo.userList}">
                         <tr>
                             <td>
                                 <span style="font-weight: 600;">${user.name}</span>
@@ -86,7 +86,7 @@
                         </tr>
                     </c:forEach>
                     
-                    <c:if test="${empty userList}">
+                    <c:if test="${empty adminPageInfo.userList}">
                         <tr>
                             <td colspan="6" style="text-align: center; padding: 60px; color: #9ca3af;">
                                 회원이 없습니다.
