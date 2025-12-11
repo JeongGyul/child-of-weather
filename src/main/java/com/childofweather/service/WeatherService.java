@@ -33,8 +33,8 @@ public class WeatherService {
         WeatherDTO.WeatherData current = loadCurrentWeather(grid, baseNow);
         List<WeatherDTO.HourlyForecast> hourlyAll = loadHourlyForecast(grid, baseVilage);
 
-        // 4. 시간별 예보는 "현재 시각 이후" 기준으로 최대 4개만 사용
-        List<WeatherDTO.HourlyForecast> hourly = selectUpcomingForecasts(hourlyAll, 4);
+        // 4. 시간별 예보는 "현재 시각 이후" 기준으로 최대 5개만 사용
+        List<WeatherDTO.HourlyForecast> hourly = selectUpcomingForecasts(hourlyAll, 5);
 
         // 5. 행정구역 이름 매핑 (기존 GridAddressLoader 사용)
         String key = grid.getNx() + "-" + grid.getNy();
@@ -208,6 +208,7 @@ public class WeatherService {
         );
 
         String today = LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DATE_FMT);
+
         return parseVilageFcstXml(xml, today);
     }
 
@@ -259,7 +260,7 @@ public class WeatherService {
     }
 
     // -------------------------
-    //   6) 시간 필터링: 현재 시각 이후 4개
+    //   6) 시간 필터링: 현재 시각 이후 5개
     // -------------------------
     private List<WeatherDTO.HourlyForecast> selectUpcomingForecasts(List<WeatherDTO.HourlyForecast> all, int limit) {
         if (all == null || all.isEmpty() || limit <= 0) {
@@ -269,7 +270,7 @@ public class WeatherService {
         int nowHour = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getHour();
         List<WeatherDTO.HourlyForecast> result = new ArrayList<>(limit);
 
-        // 1차: 현재 시각보다 크거나 같은 시간
+        // 1차: 현재 시각 이상
         for (WeatherDTO.HourlyForecast hf : all) {
             int h = parseHour(hf.getTime());
             if (h >= nowHour) {

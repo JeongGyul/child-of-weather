@@ -54,69 +54,22 @@ public class WeatherDTO {
         private String conditionText = "정보 없음";
         private String statusMessage = "현재 기상 정보를 불러왔습니다.";
 
-        public double getTemperature() {
-            return temperature;
-        }
-
-        public void setTemperature(double temperature) {
-            this.temperature = temperature;
-        }
-
-        public double getHumidity() {
-            return humidity;
-        }
-
-        public void setHumidity(double humidity) {
-            this.humidity = humidity;
-        }
-
-        public double getWindSpeed() {
-            return windSpeed;
-        }
-
-        public void setWindSpeed(double windSpeed) {
-            this.windSpeed = windSpeed;
-        }
-
-        public double getRain1h() {
-            return rain1h;
-        }
-
-        public void setRain1h(double rain1h) {
-            this.rain1h = rain1h;
-        }
-
-        public int getPty() {
-            return pty;
-        }
-
-        public void setPty(int pty) {
-            this.pty = pty;
-        }
-
-        public double getPrecipitationProb() {
-            return precipitationProb;
-        }
-
-        public void setPrecipitationProb(double precipitationProb) {
-            this.precipitationProb = precipitationProb;
-        }
-
-        public String getConditionText() {
-            return conditionText;
-        }
-
-        public void setConditionText(String conditionText) {
-            this.conditionText = conditionText;
-        }
-
-        public String getStatusMessage() {
-            return statusMessage;
-        }
-
-        public void setStatusMessage(String statusMessage) {
-            this.statusMessage = statusMessage;
-        }
+        public double getTemperature() { return temperature; }
+        public void setTemperature(double temperature) { this.temperature = temperature; }
+        public double getHumidity() { return humidity; }
+        public void setHumidity(double humidity) { this.humidity = humidity; }
+        public double getWindSpeed() { return windSpeed; }
+        public void setWindSpeed(double windSpeed) { this.windSpeed = windSpeed; }
+        public double getRain1h() { return rain1h; }
+        public void setRain1h(double rain1h) { this.rain1h = rain1h; }
+        public int getPty() { return pty; }
+        public void setPty(int pty) { this.pty = pty; }
+        public double getPrecipitationProb() { return precipitationProb; }
+        public void setPrecipitationProb(double precipitationProb) { this.precipitationProb = precipitationProb; }
+        public String getConditionText() { return conditionText; }
+        public void setConditionText(String conditionText) { this.conditionText = conditionText; }
+        public String getStatusMessage() { return statusMessage; }
+        public void setStatusMessage(String statusMessage) { this.statusMessage = statusMessage; }
 
         /**
          * 원래 WeatherServlet의 toConditionText + buildStatusMessage 로직 합친 메서드
@@ -190,41 +143,15 @@ public class WeatherDTO {
         private int pty = 0;
         private int pop = -1;
 
-        public HourlyForecast(String time) {
-            this.time = time;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-
-        public double getTemperature() {
-            return temperature;
-        }
-
-        public void setTemperature(double temperature) {
-            this.temperature = temperature;
-        }
-
-        public int getPty() {
-            return pty;
-        }
-
-        public void setPty(int pty) {
-            this.pty = pty;
-        }
-
-        public int getPop() {
-            return pop;
-        }
-
-        public void setPop(int pop) {
-            this.pop = pop;
-        }
+        public HourlyForecast(String time) { this.time = time; }
+        public String getTime() { return time; }
+        public void setTime(String time) { this.time = time; }
+        public double getTemperature() { return temperature; }
+        public void setTemperature(double temperature) { this.temperature = temperature; }
+        public int getPty() { return pty; }
+        public void setPty(int pty) { this.pty = pty; }
+        public int getPop() { return pop; }
+        public void setPop(int pop) { this.pop = pop; }
     }
 
     // ========== 최종 응답 DTO (Servlet에서 JSON으로 내려줄 객체) ==========
@@ -239,53 +166,16 @@ public class WeatherDTO {
             this.hourly = (hourly != null) ? hourly : new ArrayList<>();
         }
 
-        public String getLocationName() {
-            return locationName;
-        }
+        public String getLocationName() { return locationName; }
+        public WeatherData getCurrent() { return current; }
 
-        public WeatherData getCurrent() {
-            return current;
-        }
-
-        public List<HourlyForecast> getHourly() {
-            return hourly;
-        }
+        public List<HourlyForecast> getHourly() { return hourly; }
 
         private String escape(String s) {
             if (s == null) return "";
             return s.replace("\"", "\\\"");
         }
 
-        /**
-         * 원래 WeatherServlet.buildJson 과 동일한 JSON 형태로 직렬화
-         */
-        public String toJson() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("{");
-            sb.append("\"locationName\":\"").append(escape(locationName)).append("\"");
-            sb.append(",\"temperature\":").append(current.getTemperature());
-            sb.append(",\"conditionText\":\"").append(escape(current.getConditionText())).append("\"");
-            sb.append(",\"statusMessage\":\"").append(escape(current.getStatusMessage())).append("\"");
-            sb.append(",\"humidity\":").append(current.getHumidity());
-            sb.append(",\"windSpeed\":").append(current.getWindSpeed());
-            sb.append(",\"precipitationProb\":").append((int) current.getPrecipitationProb());
-
-            sb.append(",\"hourly\":[");
-            for (int i = 0; i < hourly.size(); i++) {
-                HourlyForecast h = hourly.get(i);
-                if (i > 0) sb.append(",");
-                sb.append("{");
-                sb.append("\"time\":\"").append(h.getTime()).append("\"");
-                sb.append(",\"temperature\":").append(h.getTemperature());
-                sb.append(",\"pty\":").append(h.getPty());
-                sb.append(",\"pop\":").append(h.getPop());
-                sb.append("}");
-            }
-            sb.append("]");
-
-            sb.append("}");
-            return sb.toString();
-        }
 
         @Override
         public String toString() {

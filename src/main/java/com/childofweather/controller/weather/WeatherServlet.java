@@ -2,6 +2,7 @@ package com.childofweather.controller.weather;
 
 import com.childofweather.dto.WeatherDTO;
 import com.childofweather.service.WeatherService;
+import com.childofweather.util.WeatherJsonMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,6 +16,7 @@ import java.io.PrintWriter;
 public class WeatherServlet extends HttpServlet {
 
     private final WeatherService weatherService = new WeatherService();
+    private final WeatherJsonMapper weatherJsonMapper = new WeatherJsonMapper();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +49,7 @@ public class WeatherServlet extends HttpServlet {
 
             response.setContentType("application/json; charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
-                out.write(dto.toJson());
+                out.write(weatherJsonMapper.toJson(dto));
             }
 
         } catch (Exception e) {
