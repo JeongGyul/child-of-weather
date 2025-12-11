@@ -46,9 +46,9 @@ public class ActivityDAO {
 
     private final String SELECT_RECOMMEND_ACTIVITY =
             "SELECT " +
-                    "activity_type_id, name, default_duration_min, icon_code, is_activity " +
+                    "activity_type_id, name, default_duration_min, icon_code, is_active " +
             "FROM activity_types " +
-            "WHERE is_activity == 1";
+            "WHERE is_active = 1";
 
     public void insertMemberActivity(ActivityDTO.Request dto) {
         try {
