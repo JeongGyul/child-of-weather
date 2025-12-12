@@ -18,6 +18,8 @@
         const windEl = statRows[0] ? statRows[0].querySelector('.cw-stat-pill:nth-child(2)') : null;
         const rainEl = statRows[1] ? statRows[1].querySelector('.cw-stat-pill:nth-child(1)') : null;
 
+        const recommendContainer = document.getElementById("recommend-row");
+
         // 대시보드가 구조가 바뀌어서 요소를 못 찾으면 그냥 종료
         if (!locationEl || !tempEl || !conditionEl) {
             console.warn('dashboard.js: 필요한 요소를 찾지 못했습니다.');
@@ -62,11 +64,12 @@
                         locationEl,
                         tempEl,
                         conditionEl,
-                        subTextEl,     // ★ 추가
+                        subTextEl,
                         humidityEl,
                         windEl,
                         rainEl,
-                        hourlyContainer: document.getElementById('hourly-row') // 3번에서 쓸 예정
+                        hourlyContainer: document.getElementById('hourly-row'),
+                        recommendContainer: recommendContainer
                     }, data);
                 })
                 .catch(function (err) {
@@ -141,8 +144,11 @@
             humidityEl,
             windEl,
             rainEl,
-            hourlyContainer
+            hourlyContainer,
+            recommendContainer
         } = els;
+
+        console.log('[updateCurrentWeatherView] data =', data);
 
         if (locationEl && data.locationName) {
             locationEl.textContent = '현재 날씨 · ' + data.locationName;
@@ -181,6 +187,12 @@
         // ★ 3번 기능: 시간별 예보는 아래에서 처리 (hourlyContainer + data.hourly)
         if (hourlyContainer && Array.isArray(data.hourly)) {
             updateHourlyForecast(hourlyContainer, data.hourly);
+        }
+
+        console.log('[updateCurrentWeatherView] data.recommendations =', data.recommendations);
+
+        if(recommendContainer && Array.isArray(data.recommendations)) {
+            updateRecommendations(recommendContainer, data.recommendations);
         }
     }
 
@@ -246,5 +258,80 @@
         }
     }
 
+    function updateRecommendations(container, recommendList) {
+        console.log('[updateRecommendations] recommendList =', recommendList);
+
+        //기존 카드들 제거
+        container.innerHTML = '';
+
+        if (!Array.isArray(recommendList) || recommendList.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'rec-placeholder';
+            empty.textContent = '현재 날씨에 맞는 추천 활동이 없습니다.';
+            container.appendChild(empty);
+            return;
+        }
+
+        recommendList.forEach(function (rec, index){
+            //카드 전체
+            const card = document.createElement('article');
+            card.className = 'rec-card';
+
+            //헤더
+            const header = document.createElement('div');
+            header.className = 'rec-header';
+
+            const left = document.createElement('div');
+            left.className = 'rec-left';
+
+            const icon = document.createElement('div');
+            icon.className = 'rec-icon';
+            icon.textContent = rec.icon_code || '🧺';
+
+            const title = document.createElement('div');
+            title.className = 'rec-title'
+            title.textContent = rec.activity_name || '추천 활동'
+
+            left.appendChild(icon);
+            left.appendChild(title);
+
+            header.appendChild(left);
+
+            // 바디
+            const body = document.createElement('div');
+            body.className = 'rec-body';
+
+            const timeRow = document.createElement('div');
+            timeRow.className = 'rec-time-row';
+
+            const timeIcon = document.createElement('span');
+            timeIcon.className = 'rec-time-icon';
+            timeIcon.textContent = '🕒';
+
+            const timeText = document.createElement('span');
+            if (typeof rec.duration_time === 'number') {
+                timeText.textContent = '예상 소요 시간 ' + rec.duration_time + '분';
+            } else {
+                timeText.textContent = '예상 소요 시간 정보 없음';
+            }
+
+            timeRow.appendChild(timeIcon);
+            timeRow.appendChild(timeText);
+
+            const desc = document.createElement('span');
+            // 설명은 일단 간단한 기본 문구로. 나중에 서버에서 설명 필드 추가해도 됨
+            desc.textContent = '현재 날씨에 어울리는 활동입니다.';
+
+            body.appendChild(timeRow);
+            body.appendChild(desc);
+
+            // 조립
+            card.appendChild(header);
+            card.appendChild(body);
+
+            container.appendChild(card);
+
+        })
+    }
 
 })();

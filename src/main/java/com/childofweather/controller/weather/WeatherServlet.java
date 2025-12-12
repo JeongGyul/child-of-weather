@@ -4,6 +4,7 @@ import com.childofweather.dto.ActivityDTO;
 import com.childofweather.dto.WeatherDTO;
 import com.childofweather.service.RecommendActivityService;
 import com.childofweather.service.WeatherService;
+import com.childofweather.util.RecommendActivityJsonMapper;
 import com.childofweather.util.WeatherJsonMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class WeatherServlet extends HttpServlet {
 
     private final WeatherService weatherService = new WeatherService();
     private final WeatherJsonMapper weatherJsonMapper = new WeatherJsonMapper();
+    private final RecommendActivityJsonMapper recommendActivityJsonMapper = new RecommendActivityJsonMapper();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,9 +53,11 @@ public class WeatherServlet extends HttpServlet {
             WeatherDTO.Response dto = weatherService.getWeather(lat, lon);
             List<ActivityDTO.RecommendActivityResponse> activities = RecommendActivityService.getRecommendActivities(dto);
 
+            System.out.println(recommendActivityJsonMapper.toJson(activities));
+
             response.setContentType("application/json; charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
-                out.write(weatherJsonMapper.toJson(dto));
+                out.write(weatherJsonMapper.toJson(dto, activities));
             }
 
         } catch (Exception e) {

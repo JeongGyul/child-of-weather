@@ -16,7 +16,7 @@ public class RecommendActivityJsonMapper {
         StringBuilder sb = new StringBuilder();
 
         sb.append("{");
-        sb.append("\"recommendations\": [\":");
+        sb.append("\"recommendations\": [");
         for (int i = 0; i < list.size(); i++) {
             ActivityDTO.RecommendActivityResponse response = list.get(i);
 

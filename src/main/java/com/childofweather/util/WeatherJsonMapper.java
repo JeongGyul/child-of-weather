@@ -1,6 +1,8 @@
 package com.childofweather.util;
 
+import com.childofweather.dto.ActivityDTO;
 import com.childofweather.dto.WeatherDTO;
+import com.childofweather.service.RecommendActivityService;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class WeatherJsonMapper {
         return s.replace("\"", "\\\"");
     }
 
-    public String toJson(WeatherDTO.Response dto) {
+    public String toJson(WeatherDTO.Response dto, List<ActivityDTO.RecommendActivityResponse> activities) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("{");
@@ -37,7 +39,20 @@ public class WeatherJsonMapper {
         }
         sb.append("]");
 
+        sb.append(",\"recommendations\":[");
+        for (int i = 0; i < activities.size(); i++) {
+            ActivityDTO.RecommendActivityResponse a = activities.get(i);
+            if (i > 0) sb.append(",");
+            sb.append("{");
+            sb.append("\"activity_type_id\":\"").append(a.getActivityTypeId()).append("\"");
+            sb.append(",\"activity_name\":\"").append(escape(a.getActivityName())).append("\"");
+            sb.append(",\"duration_time\":").append(a.getDefaultDurationTime());
+            sb.append(",\"icon_code\":\"").append(escape(a.getIconCode())).append("\"");
+            sb.append("}");
+        }
+        sb.append("]");
         sb.append("}");
+
 
         return sb.toString();
     }
