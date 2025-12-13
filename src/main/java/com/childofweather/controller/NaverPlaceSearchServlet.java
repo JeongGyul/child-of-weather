@@ -4,7 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import com.childofweather.util.ApiConfig;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,9 +21,8 @@ public class NaverPlaceSearchServlet extends HttpServlet {
     private static final String API_URL =
             "https://openapi.naver.com/v1/search/local.json";
 
-    // ✅ 여기에 네이버 Developers(검색 API)에서 복사한 ID/Secret 넣기
-    private static final String CLIENT_ID = "YOUR_LOCAL_CLIENT_ID";
-    private static final String CLIENT_SECRET = "YOUR_LOCAL_CLIENT_SECRET";
+    private static final String CLIENT_ID = ApiConfig.get("naver.search.client.id");
+    private static final String CLIENT_SECRET = ApiConfig.get("naver.search.client.secret");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
