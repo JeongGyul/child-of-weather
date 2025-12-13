@@ -21,15 +21,8 @@ public class ActivityDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
-        MemberDTO.InfoResponse loginUser = (session != null)
-                ? (MemberDTO.InfoResponse) session.getAttribute("loginUser")
-                : null;
-
-        if (loginUser == null) {
-            response.sendRedirect(request.getContextPath() + "/login.do");
-            return;
-        }
+    	HttpSession session = request.getSession(false);
+        MemberDTO.InfoResponse loginUser = (MemberDTO.InfoResponse) session.getAttribute("loginUser");
         
         long memberActivityId = Long.parseLong(request.getParameter("memberActivityId"));
         long memberId = loginUser.getMemberId();

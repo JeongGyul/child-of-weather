@@ -22,8 +22,6 @@ public class AdminServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-
-    	request.setCharacterEncoding("UTF-8");
     	
         AdminDTO.AdminPageResponse adminPageInfo = adminService.getAdminPageInfo();
 
