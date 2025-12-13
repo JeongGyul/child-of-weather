@@ -44,6 +44,12 @@ public class ActivityDAO {
             "DELETE FROM member_activities " +
             "WHERE member_activity_id = ? AND member_id = ?";
 
+    private final String SELECT_RECOMMEND_ACTIVITY =
+            "SELECT " +
+                    "activity_type_id, name, default_duration_min, icon_code, is_active " +
+            "FROM activity_types " +
+            "WHERE is_active = 1";
+
     public void insertMemberActivity(ActivityDTO.Request dto) {
         try {
             conn = JdbcConnectUtil.getConnection();
@@ -84,7 +90,7 @@ public class ActivityDAO {
             JdbcConnectUtil.close(conn, pstmt, rs);
         }
     }
-    
+
     public List<ActivityDTO.Response> getActivities(Long memberId) {
         List<ActivityDTO.Response> list = new ArrayList<>();
         try {
@@ -148,5 +154,34 @@ public class ActivityDAO {
         } finally {
             JdbcConnectUtil.close(conn, pstmt, rs);
         }
+    }
+
+    public List<ActivityDTO.RecommendActivityResponse> getRecommendActivity() {
+        List<ActivityDTO.RecommendActivityResponse> list = new ArrayList<>();
+
+        try {
+            conn = JdbcConnectUtil.getConnection();
+            pstmt = conn.prepareStatement(SELECT_RECOMMEND_ACTIVITY);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ActivityDTO.RecommendActivityResponse dto = new ActivityDTO.RecommendActivityResponse();
+
+                dto.setActivityTypeId(rs.getLong("activity_type_id"));
+                dto.setActivityName(rs.getString("name"));
+                dto.setDefaultDurationMin(rs.getInt("default_duration_min"));
+                dto.setIconCode(rs.getString("icon_code"));
+
+                list.add(dto);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcConnectUtil.close(conn, pstmt, rs);
+        }
+
+        return list;
+
     }
 }

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -45,62 +46,10 @@
         <!-- 오늘의 추천 -->
         <section>
             <h2 class="section-title">오늘의 추천</h2>
-            <div class="recommend-row">
 
-                <!-- 빨래 건조 -->
-                <article class="rec-card">
-                    <div class="rec-header">
-                        <div class="rec-left">
-                            <div class="rec-icon sun">☀</div>
-                            <div class="rec-title">빨래 건조</div>
-                        </div>
-                        <div class="rec-badge optimal">최적</div>
-                    </div>
-                    <div class="rec-body">
-                        <div class="rec-time-row">
-                            <span class="rec-time-icon">🕒</span>
-                            <span>오전 10시 ~ 오후 4시</span>
-                        </div>
-                        <span>습도 낮고 바람 적당, 건조에 최적</span>
-                    </div>
-                </article>
-
-                <!-- 세차 -->
-                <article class="rec-card">
-                    <div class="rec-header">
-                        <div class="rec-left">
-                            <div class="rec-icon carwash">🧽</div>
-                            <div class="rec-title">세차</div>
-                        </div>
-                        <div class="rec-badge good">좋음</div>
-                    </div>
-                    <div class="rec-body">
-                        <div class="rec-time-row">
-                            <span class="rec-time-icon">🕒</span>
-                            <span>오늘 오후 2시 이후</span>
-                        </div>
-                        <span>강수 확률 낮음, 72시간 동안 비 예보 없음</span>
-                    </div>
-                </article>
-
-                <!-- 출퇴근길 -->
-                <article class="rec-card">
-                    <div class="rec-header">
-                        <div class="rec-left">
-                            <div class="rec-icon route">⚠</div>
-                            <div class="rec-title">출퇴근길</div>
-                        </div>
-                        <div class="rec-badge warn">주의</div>
-                    </div>
-                    <div class="rec-body">
-                        <div class="rec-time-row">
-                            <span class="rec-time-icon">🕒</span>
-                            <span>오전 8시</span>
-                        </div>
-                        <span>미세먼지 보통, 마스크 착용 권장</span>
-                    </div>
-                </article>
-
+            <!-- JS가 이 안을 다 채움 -->
+            <div class="recommend-row" id="recommend-row">
+                <!-- <div class="rec-placeholder">날씨 정보를 불러오는 중...</div> -->
             </div>
         </section>
 

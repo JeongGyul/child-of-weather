@@ -124,4 +124,20 @@ public class ActivityDTO {
 			this.recommendationEndTime = recommendationEndTime;
 		}
 	}
+
+	public static class RecommendActivityResponse {
+		private Long activityTypeId;
+		private String activityName;
+		private Integer defaultDurationMin;
+		private String iconCode;
+
+		public Long getActivityTypeId() { return activityTypeId; }
+		public void setActivityTypeId(Long activityTypeId) { this.activityTypeId = activityTypeId; }
+		public String getActivityName() { return activityName; }
+		public void setActivityName(String activityName) { this.activityName = activityName; }
+		public Integer getDefaultDurationTime() { return defaultDurationMin; }
+		public void setDefaultDurationMin(Integer defaultDurationMin) { this.defaultDurationMin = defaultDurationMin; }
+		public String getIconCode() { return iconCode; }
+		public void setIconCode(String iconCode) { this.iconCode = iconCode; }
+	}
 }

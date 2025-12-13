@@ -209,94 +209,86 @@ body {
     margin: 8px 0 14px;
 }
 
-/* 추천 카드 : 3컬럼 고정 + 높이 키움 */
-
+/* 오늘의 추천 전체 래퍼 */
 .recommend-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin-bottom: 28px;
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    /* 혹시 기존에 display: none; 있었으면 꼭 지우기 */
 }
 
+/* 기본 플레이스홀더 문구 */
+.rec-placeholder {
+    color: #666;
+    font-size: 14px;
+}
+
+/* 추천 카드 */
 .rec-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 18px 20px;
-    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
-    border: 1px solid #e5e7eb;
-    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-width: 32%;
+    max-width: 50%;
+
+    padding: 16px;
+    border-radius: 12px;
+
+    background-color: #ffffff;
+    color: #111111;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
+/* 카드 헤더 */
 .rec-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
 .rec-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .rec-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
-
-.rec-icon.sun {
-    background: #ecfdf5;
-    color: #16a34a;
-}
-
-.rec-icon.carwash {
-    background: #e0f2fe;
-    color: #2563eb;
-}
-
-.rec-icon.route {
-    background: #fef3c7;
-    color: #d97706;
+    font-size: 24px;
 }
 
 .rec-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
 }
 
+/* 배지 */
 .rec-badge {
-    font-size: 11px;
-    padding: 4px 10px;
+    font-size: 12px;
+    padding: 4px 8px;
     border-radius: 999px;
+    color: #ffffff;
 }
 
 .rec-badge.optimal {
-    background: #111827;
-    color: #f9fafb;
+    background-color: #2f80ed; /* 최적 */
 }
 
 .rec-badge.good {
-    background: #e0f2fe;
-    color: #1d4ed8;
+    background-color: #27ae60; /* 좋음 */
 }
 
-.rec-badge.warn {
-    background: #fef3c7;
-    color: #b45309;
-}
-
+/* 카드 바디 */
 .rec-body {
-    font-size: 13px;
-    color: #4b5563;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    font-size: 13px;
+    color: #444444;
 }
 
 .rec-time-row {
@@ -306,10 +298,8 @@ body {
 }
 
 .rec-time-icon {
-    font-size: 13px;
-    opacity: 0.7;
+    font-size: 14px;
 }
-
 /* 시간별 예보 카드도 넓게 */
 
 .hourly-card {
