@@ -22,17 +22,6 @@ public class MyPageEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
-        MemberDTO.InfoResponse loginUser = (session == null)
-                ? null
-                : (MemberDTO.InfoResponse) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            // 로그인 안 되어 있으면 로그인 화면으로
-            response.sendRedirect(request.getContextPath() + "/login.do");
-            return;
-        }
-
         request.getRequestDispatcher("/WEB-INF/views/member/mypage_edit.jsp")
                .forward(request, response);
     }
@@ -43,16 +32,8 @@ public class MyPageEditServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-
         HttpSession session = request.getSession(false);
-        MemberDTO.InfoResponse loginUser = (session == null)
-                ? null
-                : (MemberDTO.InfoResponse) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            response.sendRedirect(request.getContextPath() + "/login.do");
-            return;
-        }
+        MemberDTO.InfoResponse loginUser = (MemberDTO.InfoResponse) session.getAttribute("loginUser");
         
         String originalEmail = loginUser.getEmail();
         String newName = request.getParameter("name");

@@ -20,7 +20,6 @@ public class WeatherServlet extends HttpServlet {
 
     private final WeatherService weatherService = new WeatherService();
     private final WeatherJsonMapper weatherJsonMapper = new WeatherJsonMapper();
-   
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,8 +50,6 @@ public class WeatherServlet extends HttpServlet {
         try {
             WeatherDTO.Response dto = weatherService.getWeather(lat, lon);
             List<ActivityDTO.RecommendActivityResponse> activities = RecommendActivityService.getRecommendActivities(dto);
-
-            
 
             response.setContentType("application/json; charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {

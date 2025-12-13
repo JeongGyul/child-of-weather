@@ -23,15 +23,8 @@ public class ActivityServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-        HttpSession session = request.getSession(false);
-        MemberDTO.InfoResponse loginUser = (session != null)
-                ? (MemberDTO.InfoResponse) session.getAttribute("loginUser")
-                : null;
-
-        if (loginUser == null) {
-            response.sendRedirect(request.getContextPath() + "/login.do");
-            return;
-        }
+    	HttpSession session = request.getSession(false);
+        MemberDTO.InfoResponse loginUser = (MemberDTO.InfoResponse) session.getAttribute("loginUser");
 
         Long memberId = loginUser.getMemberId();
         List<ActivityDTO.Response> activityList = activityService.getActivities(memberId);
@@ -46,16 +39,8 @@ public class ActivityServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-
         HttpSession session = request.getSession(false);
-        MemberDTO.InfoResponse loginUser = (session != null)
-                ? (MemberDTO.InfoResponse) session.getAttribute("loginUser")
-                : null;
-
-        if (loginUser == null) {
-            response.sendRedirect(request.getContextPath() + "/login.do");
-            return;
-        }
+        MemberDTO.InfoResponse loginUser = (MemberDTO.InfoResponse) session.getAttribute("loginUser");
 
         Long memberId = loginUser.getMemberId();
         String activityTypeIdStr = request.getParameter("activityTypeId");
