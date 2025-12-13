@@ -29,3 +29,6 @@ src/main/resources/db.properties
 
 # Service Key 파일
 src/main/resources/serviceKey.properties
+
+# API Key 설정 파일 (Git 제외)
+src/main/resources/application.properties

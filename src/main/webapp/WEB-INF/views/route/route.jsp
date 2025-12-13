@@ -11,7 +11,7 @@
 <!-- 네이버 지도 JS (childofweather1 Application의 Client ID 사용) -->
 	<script
    	 type="text/javascript"
-   	 src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=YOUR_MAP_KEY&submodules=geocoder&callback=initRouteMap">
+   	 src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=n3w8jn1lgc&submodules=geocoder&callback=initRouteMap">
 	</script>
 
 
