@@ -2,6 +2,7 @@ package com.childofweather.controller.activity;
 
 import com.childofweather.dto.ActivityDTO;
 import com.childofweather.dto.MemberDTO;
+import com.childofweather.dto.WeatherDTO;
 import com.childofweather.service.ActivityService;
 
 import jakarta.servlet.ServletException;
@@ -22,8 +23,9 @@ public class ActivityServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
+
         HttpSession session = request.getSession(false);
+
         MemberDTO.InfoResponse loginUser = (session != null)
                 ? (MemberDTO.InfoResponse) session.getAttribute("loginUser")
                 : null;
@@ -33,8 +35,17 @@ public class ActivityServlet extends HttpServlet {
             return;
         }
 
+        List<WeatherDTO.HourlyForecast> hourly = (session != null)
+                ? (List<WeatherDTO.HourlyForecast>) session.getAttribute("hourly")
+                : null;
+
+        if (hourly == null) {
+            response.sendRedirect(request.getContextPath() + "/dashboard.do");
+            return;
+        }
+
         Long memberId = loginUser.getMemberId();
-        List<ActivityDTO.Response> activityList = activityService.getActivities(memberId);
+        List<ActivityDTO.Response> activityList = activityService.getActivities(memberId, hourly);
 
         request.setAttribute("activityList", activityList);
         request.getRequestDispatcher("/WEB-INF/views/activity/activity.jsp")

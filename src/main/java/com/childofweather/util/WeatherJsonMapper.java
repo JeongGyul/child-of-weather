@@ -2,7 +2,6 @@ package com.childofweather.util;
 
 import com.childofweather.dto.ActivityDTO;
 import com.childofweather.dto.WeatherDTO;
-import com.childofweather.service.RecommendActivityService;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class WeatherJsonMapper {
             if (i > 0) sb.append(",");
             sb.append("{");
             sb.append("\"time\":\"").append(h.getTime()).append("\"");
-            sb.append(",\"temperature\":").append(h.getTemperature());
+            sb.append(",\"temperature\":").append(h.getTemperature1h());
             sb.append(",\"pty\":").append(h.getPty());
             sb.append(",\"pop\":").append(h.getPop());
             sb.append("}");

@@ -4,16 +4,17 @@ import com.childofweather.dto.ActivityDTO;
 import com.childofweather.dto.WeatherDTO;
 import com.childofweather.service.RecommendActivityService;
 import com.childofweather.service.WeatherService;
-import com.childofweather.util.RecommendActivityJsonMapper;
 import com.childofweather.util.WeatherJsonMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/weather/short")
@@ -21,7 +22,6 @@ public class WeatherServlet extends HttpServlet {
 
     private final WeatherService weatherService = new WeatherService();
     private final WeatherJsonMapper weatherJsonMapper = new WeatherJsonMapper();
-    private final RecommendActivityJsonMapper recommendActivityJsonMapper = new RecommendActivityJsonMapper();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,11 +49,14 @@ public class WeatherServlet extends HttpServlet {
             return;
         }
 
+
         try {
             WeatherDTO.Response dto = weatherService.getWeather(lat, lon);
             List<ActivityDTO.RecommendActivityResponse> activities = RecommendActivityService.getRecommendActivities(dto);
 
-            System.out.println(recommendActivityJsonMapper.toJson(activities));
+            HttpSession session = request.getSession();
+
+            session.setAttribute("hourly", new ArrayList<>(dto.getHourly()));
 
             response.setContentType("application/json; charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
