@@ -190,8 +190,68 @@ public class WeatherService {
             }
         }
 
-        data.buildCondition();
+        buildCondition(data);
         return data;
+    }
+
+    public static void buildCondition(WeatherDTO.WeatherData data) {
+        // 조건 텍스트
+        switch (data.getPty()) {
+            case 0:
+                if (data.getRain1h() > 0.0) {
+                    data.setConditionText("약한 비");
+                } else {
+                    data.setConditionText("맑음");
+                }
+                break;
+            case 1:
+                data.setConditionText("비");
+                break;
+            case 2:
+                data.setConditionText("비/눈");
+                break;
+            case 3:
+                data.setConditionText("눈");
+                break;
+            case 4:
+                data.setConditionText("소나기");
+                break;
+            default:
+                data.setConditionText("알 수 없음");
+        }
+
+        data.setPrecipitationProb((data.getRain1h() > 0.0) ? 100.0 : 0.0);
+
+        // 상태 메시지
+        if (data.getPty() == 0) {
+            if (!Double.isNaN(data.getTemperature()) && data.getTemperature() >= 28) {
+                data.setStatusMessage("덥고 습한 날씨입니다. 수분 보충과 실내 휴식을 추천합니다.");
+            } else if (!Double.isNaN(data.getTemperature()) && data.getTemperature() <= 3) {
+                data.setStatusMessage("기온이 낮습니다. 따뜻한 옷차림을 준비하세요.");
+            } else if (!Double.isNaN(data.getHumidity()) && data.getHumidity() >= 80) {
+                data.setStatusMessage("비는 없지만 습도가 높습니다. 실내 공기 환기에 신경 써주세요.");
+            } else {
+                data.setStatusMessage("오늘도 맑고 쾌적한 하루가 예상됩니다.");
+            }
+        } else {
+            switch (data.getPty()) {
+                case 1:
+                    data.setStatusMessage("비가 내리고 있습니다. 우산을 챙기고 이동 시간에 여유를 두세요.");
+                    break;
+                case 2:
+                    data.setStatusMessage("비와 눈이 섞여 내리고 있습니다. 도로가 미끄러울 수 있습니다.");
+                    break;
+                case 3:
+                    data.setStatusMessage("눈이 내리고 있습니다. 미끄럼 사고에 주의하세요.");
+                    break;
+                case 4:
+                    data.setStatusMessage("소나기가 지나는 중입니다. 짧은 시간 강한 비에 대비하세요.");
+                    break;
+                default:
+                    data.setStatusMessage("강수 형태가 불안정합니다. 최신 기상 정보를 확인하세요.");
+                    break;
+            }
+        }
     }
 
     // -------------------------
