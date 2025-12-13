@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import com.childofweather.dto.MemberDTO;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
@@ -33,14 +35,22 @@ public class AuthenticationFilter extends HttpFilter {
 		}
 		
 		HttpSession session = request.getSession(false);
-		boolean isLoggedIn = (session != null && session.getAttribute("loginUser") != null);
+		MemberDTO.InfoResponse loginUser = (session == null) ? 
+                null : (MemberDTO.InfoResponse) session.getAttribute("loginUser");
 		
-		if(isLoggedIn) {
-			chain.doFilter(request, response);
-		} else {
+		if(loginUser == null) {
 			System.out.println(">>> [AuthFilter] 미인증 사용자 접근 차단: " + path);
             response.sendRedirect(contextPath + "/login.do");
+            return;
 		}
+		
+		if (path.startsWith("/admin") && !"ADMIN".equals(loginUser.getRole())) {
+			System.out.println(">>> [AuthFilter] 일반 사용자 관리자 페이지 접근 차단: " + loginUser.getName());
+			response.sendRedirect(contextPath + "/dashboard.do");
+			return;
+	    }
+		
+		chain.doFilter(request, response);
 	}
 	
 	private boolean isWhiteList(String path) {
