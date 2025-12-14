@@ -23,7 +23,6 @@
 			</div>
             <div class="user-info">
     			<span class="name">${sessionScope.loginUser.name}</span>
-    			<span class="region">경북</span>
 			</div>
         </div>
     </header>
