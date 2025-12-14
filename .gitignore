@@ -27,7 +27,7 @@ work/
 # DB 파일
 src/main/resources/db.properties
 
-# Service Key 파일
+# Weather API Service Key 파일
 src/main/resources/serviceKey.properties
 
 # API Key 설정 파일 (Git 제외)

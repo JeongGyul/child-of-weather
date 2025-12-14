@@ -1,5 +1,7 @@
 package com.childofweather.dto;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -54,14 +56,12 @@ public class ActivityDTO {
 	public static class Response {
 		private Long memberActivityId;
 		private Long activityTypeId;
-		private String timingStatus; // BEST_NOW / PLANNED / ENDED
 		private Integer minTemperature;
         private Integer maxTemperature;
         private Integer maxHumidity;
         private Integer maxPrecipitation;
-        private LocalDate recommendationDate;
-        private LocalTime recommendationStartTime;
-        private LocalTime recommendationEndTime;
+		Recommendation recommendation;
+		private Integer defaultDurationMin;
         
 		public Long getActivityTypeId() {
 			return activityTypeId;
@@ -99,30 +99,33 @@ public class ActivityDTO {
 		public void setMemberActivityId(Long memberActivityId) {
 			this.memberActivityId = memberActivityId;
 		}
-		public String getTimingStatus() {
-			return timingStatus;
+
+		public void setRecommendation(Recommendation recommendation) {
+			this.recommendation = recommendation;
 		}
-		public void setTimingStatus(String timingStatus) {
+		public Integer getDefaultDurationMin() { return defaultDurationMin; }
+		public void setDurationMin(int defaultDurationMin) {
+			this.defaultDurationMin = defaultDurationMin;
+		}
+	}
+
+	public static class Recommendation {
+		private LocalDate date;
+		private LocalTime startTime;
+		private LocalTime endTime;
+		private String timingStatus;
+
+		public Recommendation(LocalDate date, LocalTime startTime, LocalTime endTime, String timingStatus) {
+			this.date = date;
+			this.startTime = startTime;
+			this.endTime = endTime;
 			this.timingStatus = timingStatus;
 		}
-		public LocalDate getRecommendationDate() {
-			return recommendationDate;
-		}
-		public void setRecommendationDate(LocalDate recommendationDate) {
-			this.recommendationDate = recommendationDate;
-		}
-		public LocalTime getRecommendationStartTime() {
-			return recommendationStartTime;
-		}
-		public void setRecommendationStartTime(LocalTime recommendationStartTime) {
-			this.recommendationStartTime = recommendationStartTime;
-		}
-		public LocalTime getRecommendationEndTime() {
-			return recommendationEndTime;
-		}
-		public void setRecommendationEndTime(LocalTime recommendationEndTime) {
-			this.recommendationEndTime = recommendationEndTime;
-		}
+
+		public LocalDate getDate() { return date; }
+		public LocalTime getStartTime() { return startTime; }
+		public LocalTime getEndTime() { return endTime; }
+		public String getTimingStatus() { return timingStatus; }
 	}
 
 	public static class RecommendActivityResponse {

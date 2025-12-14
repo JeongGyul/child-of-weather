@@ -37,7 +37,6 @@ public class WeatherDTO {
         public String getBaseDate() {
             return baseDate;
         }
-
         public String getBaseTime() {
             return baseTime;
         }
@@ -78,19 +77,35 @@ public class WeatherDTO {
 
     // ========== 시간별 예보 ==========
     public static class HourlyForecast {
-        private String time;          // "09:00"
-        private double temperature = Double.NaN;
-        private int pty = 0;
-        private int pop = -1;
+        // fcstDate(yyyyMMdd) + fcstTime(HHmm)를 한 번에 보관
+        private BaseDateTime baseDateTime;
+        private Double temperature1h = Double.NaN; // TMP
+        private Integer humidity = null;           // REH
+        private Integer pty = 0;                   // PTY
+        private Integer pop = -1;                  // POP
 
-        public HourlyForecast(String time) { this.time = time; }
-        public String getTime() { return time; }
-        public void setTime(String time) { this.time = time; }
-        public double getTemperature() { return temperature; }
-        public void setTemperature(double temperature) { this.temperature = temperature; }
-        public int getPty() { return pty; }
+        public HourlyForecast(BaseDateTime baseDateTime) {
+            this.baseDateTime = baseDateTime;
+        }
+
+        public BaseDateTime getBaseDateTime() { return baseDateTime; }
+        public void setBaseDateTime(BaseDateTime baseDateTime) { this.baseDateTime = baseDateTime; }
+
+        // 화면 표시용 "HH:mm"
+        public String getTime() {
+            if (baseDateTime == null) return "";
+            String t = baseDateTime.getBaseTime();
+            if (t == null || t.length() < 4) return "";
+            return t.substring(0, 2) + ":" + t.substring(2, 4);
+        }
+
+        public Double getTemperature1h() { return temperature1h; }
+        public void setTemperature1h(double temperature1h) { this.temperature1h = temperature1h; }
+        public Integer getHumidity() { return humidity; }
+        public void setHumidity(Integer humidity) { this.humidity = humidity; }
+        public Integer getPty() { return pty; }
         public void setPty(int pty) { this.pty = pty; }
-        public int getPop() { return pop; }
+        public Integer getPop() { return pop; }
         public void setPop(int pop) { this.pop = pop; }
     }
 

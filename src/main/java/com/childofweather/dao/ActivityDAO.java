@@ -7,11 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.childofweather.dto.ActivityDTO;
 import com.childofweather.util.JdbcConnectUtil;
+
+import javax.xml.crypto.Data;
 
 public class ActivityDAO {
 	
@@ -29,20 +33,33 @@ public class ActivityDAO {
 
     private final String SELECT_MEMBER_ACTIVITIES_BY_MEMBER =
             "SELECT " +
-                    "member_activity_id, member_id, activity_type_id, " +
-                    "min_temperature, max_temperature, " +
-                    "max_humidity, max_precipitation, " +
-                    "recommendation_date, " +
-                    "recommendation_start_time, recommendation_end_time, " +
-                    "timing_status, " +
-                    "last_calculated_at, created_at, updated_at " +
-            "FROM member_activities " +
-            "WHERE member_id = ? " +
-            "ORDER BY created_at DESC";
+                    "ma.member_activity_id, ma.member_id, ma.activity_type_id, " +
+                    "ma.min_temperature, ma.max_temperature, " +
+                    "ma.max_humidity, ma.max_precipitation, " +
+                    "ma.recommendation_date, " +
+                    "ma.recommendation_start_time, ma.recommendation_end_time, " +
+                    "ma.timing_status, " +
+                    "ma.last_calculated_at, ma.created_at, ma.updated_at, " +
+                    "at.default_duration_min " +
+            "FROM member_activities ma " +
+            "JOIN activity_types at ON ma.activity_type_id = at.activity_type_id " +
+            "WHERE ma.member_id = ? " +
+            "ORDER BY ma.created_at DESC";
 
     private final String DELETE_MEMBER_ACTIVITY =
             "DELETE FROM member_activities " +
             "WHERE member_activity_id = ? AND member_id = ?";
+
+    private final String UPDATE_MEMBER_ACTIVITY_RECOMMENDATION =
+            "UPDATE member_activities SET " +
+                    "recommendation_date = ?, " +
+                    "recommendation_start_time = ?, " +
+                    "recommendation_end_time = ?, " +
+                    "timing_status = ?, " +
+                    "last_calculated_at = NOW(), " +
+                    "updated_at = NOW() " +
+            "WHERE member_activity_id = ? AND member_id = ?";
+
 
     private final String SELECT_RECOMMEND_ACTIVITY =
             "SELECT " +
@@ -103,7 +120,7 @@ public class ActivityDAO {
                 ActivityDTO.Response dto = new ActivityDTO.Response();
                 dto.setMemberActivityId(rs.getLong("member_activity_id"));
                 dto.setActivityTypeId(rs.getLong("activity_type_id"));
-                dto.setTimingStatus(rs.getString("timing_status"));
+                dto.setDurationMin(rs.getInt("default_duration_min"));
 
                 int minT = rs.getInt("min_temperature");
                 dto.setMinTemperature(rs.wasNull() ? null : minT);
@@ -118,18 +135,16 @@ public class ActivityDAO {
                 dto.setMaxPrecipitation(rs.wasNull() ? null : maxP);
 
                 Date recDate = rs.getDate("recommendation_date");
-                if (recDate != null) {
-                	dto.setRecommendationDate(recDate.toLocalDate());
-                }
-
                 Time startTime = rs.getTime("recommendation_start_time");
-                if (startTime != null) {
-                	dto.setRecommendationStartTime(startTime.toLocalTime());
-                }
-
                 Time endTime = rs.getTime("recommendation_end_time");
-                if (endTime != null) {
-                	dto.setRecommendationEndTime(endTime.toLocalTime());
+                String timingStatus = rs.getString("timing_status");
+                if(recDate != null) {
+                    ActivityDTO.Recommendation recommendation = new ActivityDTO.Recommendation(
+                            recDate.toLocalDate(),
+                            startTime.toLocalTime(),
+                            endTime.toLocalTime(),
+                            timingStatus);
+                    dto.setRecommendation(recommendation);
                 }
 
                 list.add(dto);
@@ -183,5 +198,47 @@ public class ActivityDAO {
 
         return list;
 
+    }
+
+
+    public void updateRecommendation(Long memberActivityId,
+                                     long memberId,
+                                     LocalDate recDate,
+                                     LocalTime startTime,
+                                     LocalTime endTime,
+                                     String timingStatus) {
+        try {
+            conn = JdbcConnectUtil.getConnection();
+            pstmt = conn.prepareStatement(UPDATE_MEMBER_ACTIVITY_RECOMMENDATION);
+
+            if (recDate != null) {
+                pstmt.setDate(1, Date.valueOf(recDate));
+            } else {
+                pstmt.setNull(1, Types.DATE);
+            }
+
+            if (startTime != null) {
+                pstmt.setTime(2, Time.valueOf(startTime));
+            } else {
+                pstmt.setNull(2, Types.TIME);
+            }
+
+            if (endTime != null) {
+                pstmt.setTime(3, Time.valueOf(endTime));
+            } else {
+                pstmt.setNull(3, Types.TIME);
+            }
+
+            pstmt.setString(4, timingStatus);
+
+            pstmt.setLong(5, memberActivityId);
+            pstmt.setLong(6, memberId);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcConnectUtil.close(conn, pstmt, rs);
+        }
     }
 }

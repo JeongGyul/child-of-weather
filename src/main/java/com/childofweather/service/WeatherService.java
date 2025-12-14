@@ -33,8 +33,8 @@ public class WeatherService {
         WeatherDTO.WeatherData current = loadCurrentWeather(grid, baseNow);
         List<WeatherDTO.HourlyForecast> hourlyAll = loadHourlyForecast(grid, baseVilage);
 
-        // 4. 시간별 예보는 "현재 시각 이후" 기준으로 최대 5개만 사용
-        List<WeatherDTO.HourlyForecast> hourly = selectUpcomingForecasts(hourlyAll, 5);
+        // 4. 시간별 예보는 "현재 시각 이후" 기준으로 72시간 뒤까지 사용
+        List<WeatherDTO.HourlyForecast> hourly = selectUpcomingForecasts(hourlyAll, 72);
 
         // 5. 행정구역 이름 매핑 (기존 GridAddressLoader 사용)
         String key = grid.getNx() + "-" + grid.getNy();
@@ -267,12 +267,10 @@ public class WeatherService {
                 grid.getNy()
         );
 
-        String today = LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DATE_FMT);
-
-        return parseVilageFcstXml(xml, today);
+        return parseVilageFcstXml(xml);
     }
 
-    private List<WeatherDTO.HourlyForecast> parseVilageFcstXml(String xml, String targetDate) throws Exception {
+    private List<WeatherDTO.HourlyForecast> parseVilageFcstXml(String xml) throws Exception {
 
         Map<String, WeatherDTO.HourlyForecast> map = new LinkedHashMap<>();
 
@@ -283,23 +281,27 @@ public class WeatherService {
             Element item = (Element) items.item(i);
 
             String fcstDate = getText(item, "fcstDate");
-            String fcstTime = getText(item, "fcstTime");
-            String category = getText(item, "category");
-            String valueStr = getText(item, "fcstValue");
+            String fcstTime = getText(item, "fcstTime");    // yyyyMMdd
+            String category = getText(item, "category");    // HHmm
+            String valueStr = getText(item, "fcstValue");   // TMP/POP/PEH/PTY ...
 
             if (fcstDate == null || fcstTime == null || category == null || valueStr == null) continue;
-            if (!targetDate.equals(fcstDate)) continue;
 
-            map.putIfAbsent(fcstTime,
-                    new WeatherDTO.HourlyForecast(fcstTime.substring(0, 2) + ":" + fcstTime.substring(2)));
+            String key = fcstDate + fcstTime;
+            map.putIfAbsent(
+                    key, new WeatherDTO.HourlyForecast(new WeatherDTO.BaseDateTime(fcstDate, fcstTime))
+            );
 
-            WeatherDTO.HourlyForecast hf = map.get(fcstTime);
+            WeatherDTO.HourlyForecast hf = map.get(key);
 
             try {
                 switch (category) {
                     case "TMP":
                     case "T1H":
-                        hf.setTemperature(Double.parseDouble(valueStr));
+                        hf.setTemperature1h(Double.parseDouble(valueStr));
+                        break;
+                    case "REH":
+                        hf.setHumidity((int) Double.parseDouble(valueStr));
                         break;
                     case "PTY":
                         hf.setPty((int) Double.parseDouble(valueStr));
@@ -313,40 +315,38 @@ public class WeatherService {
 
         List<WeatherDTO.HourlyForecast> list = new ArrayList<>(map.values());
 
-        // 시간 오름차순 정렬 ("HH:mm" 문자열 기준)
-        list.sort(Comparator.comparing(WeatherDTO.HourlyForecast::getTime));
+        // 날짜 + 시간 오름차순 정렬
+        list.sort(Comparator.comparing(hf -> toLocalDateTime(hf.getBaseDateTime())));
 
         return list;
     }
 
     // -------------------------
-    //   6) 시간 필터링: 현재 시각 이후 5개
+    //   6) 시간 필터링: 현재 시각 이후부터 hoursAhead 시간까지
     // -------------------------
-    private List<WeatherDTO.HourlyForecast> selectUpcomingForecasts(List<WeatherDTO.HourlyForecast> all, int limit) {
-        if (all == null || all.isEmpty() || limit <= 0) {
+    private List<WeatherDTO.HourlyForecast> selectUpcomingForecasts(List<WeatherDTO.HourlyForecast> all, int hoursAhead) {
+        if (all == null || all.isEmpty() || hoursAhead <= 0) {
             return Collections.emptyList();
         }
 
-        int nowHour = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getHour();
-        List<WeatherDTO.HourlyForecast> result = new ArrayList<>(limit);
+        ZoneId kst = ZoneId.of("Asia/Seoul");
+        LocalDateTime now = LocalDateTime.now(kst);
+        LocalDateTime end = now.plusHours(hoursAhead);
 
-        // 1차: 현재 시각 이상
-        for (WeatherDTO.HourlyForecast hf : all) {
-            int h = parseHour(hf.getTime());
-            if (h >= nowHour) {
-                result.add(hf);
-                if (result.size() == limit) return result;
-            }
-        }
+        List<WeatherDTO.HourlyForecast> result = new ArrayList<>();
 
-        // 2차: 부족하면 하루 처음부터 채우기
         for (WeatherDTO.HourlyForecast hf : all) {
-            int h = parseHour(hf.getTime());
-            if (h < nowHour) {
-                result.add(hf);
-                if (result.size() == limit) break;
-            }
-        }
+            LocalDateTime fcst = toLocalDateTime(hf.getBaseDateTime());
+            if(fcst == null) continue;
+
+            boolean inRange = (
+                    fcst.isEqual(now) || fcst.isAfter(now)) &&
+                    fcst.isEqual(end) || fcst.isBefore(end);
+
+            if (inRange) result.add(hf);
+         }
+
+        result.sort(Comparator.comparing(hf -> toLocalDateTime(hf.getBaseDateTime())));
 
         return result;
     }
@@ -357,6 +357,20 @@ public class WeatherService {
             return Integer.parseInt(time.substring(0, 2));
         } catch (NumberFormatException e) {
             return 0;
+        }
+    }
+
+    private LocalDateTime toLocalDateTime(WeatherDTO.BaseDateTime dt) {
+        if (dt == null) return null;
+
+        try {
+            //yyyyMMdd + HHmm
+            return LocalDateTime.parse(
+                    dt.getBaseDate() + dt.getBaseTime(),
+                    DateTimeFormatter.ofPattern("yyyyMMddHHmm")
+                    );
+        } catch (Exception e) {
+            return null;
         }
     }
 
