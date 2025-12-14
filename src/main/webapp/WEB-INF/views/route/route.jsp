@@ -43,10 +43,6 @@
                 <h2 class="page-title">동적 경로 관리</h2>
                 <p class="page-desc">경로별 날씨 위험을 미리 확인하세요</p>
             </div>
-            <button id="btn-open-route-modal" class="btn-primary btn-add-route">
-                <span class="btn-plus">＋</span>
-                <span>경로 추가</span>
-            </button>
         </div>
 
         <!-- 출발지/도착지 검색 + 네이버 지도 영역 -->
@@ -83,10 +79,6 @@
 
         <!-- 빈 상태 표시 -->
         <div id="route-empty" class="route-empty">
-            <div class="route-empty-card">
-                <p class="route-empty-main">등록된 경로가 없습니다.</p>
-                <p class="route-empty-sub">경로를 추가하여 날씨 알림을 받으세요.</p>
-            </div>
         </div>
     </main>
 </div>

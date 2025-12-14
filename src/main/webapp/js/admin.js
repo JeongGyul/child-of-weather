@@ -7,6 +7,6 @@ function confirmDelete(memberId, memberName) {
     
     if (confirm(msg)) {
         // 삭제 서블릿 호출
-        location.href = 'deleteUser.do?id=' + memberId;
+        location.href = 'admin/deleteUser.do?id=' + memberId;
     }
 }

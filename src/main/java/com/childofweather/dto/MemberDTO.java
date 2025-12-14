@@ -131,7 +131,6 @@ public class MemberDTO {
 		private MemberDTO.InfoResponse memberInfo;
 		private int activityCount;
 		private int routeCount;
-		private int alertCount;
 		
 		public MemberDTO.InfoResponse getMemberInfo() {
 			return memberInfo;
@@ -150,12 +149,6 @@ public class MemberDTO {
 		}
 		public void setRouteCount(int routeCount) {
 			this.routeCount = routeCount;
-		}
-		public int getAlertCount() {
-			return alertCount;
-		}
-		public void setAlertCount(int alertCount) {
-			this.alertCount = alertCount;
 		}
 	}
 }

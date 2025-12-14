@@ -1,4 +1,4 @@
-package com.childofweather.controller;
+package com.childofweather.controller.route;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

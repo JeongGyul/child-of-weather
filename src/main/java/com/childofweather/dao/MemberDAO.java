@@ -53,6 +53,10 @@ public class MemberDAO {
     private final String ACTIVE_USER_COUNT =
             "SELECT COUNT(*) AS cnt FROM members " +
             "WHERE last_login_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+    
+    private final String USER_ACTIVITY_COUNT =
+            "SELECT COUNT(*) AS cnt FROM member_activities " +
+            "WHERE member_id = ?";
 
 
     // ================= 로그인, 회원 관리 =====================
@@ -173,7 +177,7 @@ public class MemberDAO {
         }
     }
 
-    public int deleteMember(String memberId) {
+    public Boolean deleteMember(String memberId) {
         int result = 0;
         try {
             conn = JdbcConnectUtil.getConnection();
@@ -185,7 +189,7 @@ public class MemberDAO {
         } finally {
             JdbcConnectUtil.close(conn, pstmt, rs);
         }
-        return result;
+        return result == 1;
     }
 
     public int getUserCount() {
@@ -244,6 +248,24 @@ public class MemberDAO {
         try {
             conn = JdbcConnectUtil.getConnection();
             pstmt = conn.prepareStatement(ACTIVE_USER_COUNT);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("cnt");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcConnectUtil.close(conn, pstmt, rs);
+        }
+        return count;
+    }
+    
+    public int getUserActivityCount(String memberId) {
+        int count = 0;
+        try {
+            conn = JdbcConnectUtil.getConnection();
+            pstmt = conn.prepareStatement(USER_ACTIVITY_COUNT);
+            pstmt.setString(1, memberId);
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 count = rs.getInt("cnt");

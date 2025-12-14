@@ -23,7 +23,6 @@
 			</div>
             <div class="user-info">
     			<span class="name">${sessionScope.loginUser.name}</span>
-    			<span class="region">경북</span>
 			</div>
         </div>
     </header>
@@ -45,9 +44,6 @@
   		   class="tab-item ${param.activeMenu == 'route' ? 'active' : ''}">
     		경로
 		</a>
-        
-        
-        <div class="tab-item ${param.activeMenu == 'notification' ? 'active' : ''}">알림</div>
         
         <a href="${pageContext.request.contextPath}/mypage.do" 
         	class="tab-item ${param.activeMenu == 'my' ? 'active' : ''}">마이

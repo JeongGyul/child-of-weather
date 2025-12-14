@@ -27,12 +27,11 @@ public class MemberService {
 	// 마이페이지 정보 반환
 	public MemberDTO.MyPageInfoResponse getMyPageInfo(MemberDTO.InfoResponse loginUser) {
 		MemberDTO.MyPageInfoResponse myPageInfo = new MemberDTO.MyPageInfoResponse();
+		int activityCount = memberDAO.getUserActivityCount(String.valueOf(loginUser.getMemberId()));
 		
 		myPageInfo.setMemberInfo(loginUser);
-		// 우선은 더미로 저장, 리팩토링 후 실제 데이터 연결
-		myPageInfo.setActivityCount(3);
+		myPageInfo.setActivityCount(activityCount);
 		myPageInfo.setRouteCount(3);
-		myPageInfo.setAlertCount(12);
 		
 		return myPageInfo;
 	}

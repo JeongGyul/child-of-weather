@@ -68,18 +68,6 @@
                     </div>
 
                     <div class="space-y-1">
-                        <div class="text-gray-400">현재 접속 지역</div>
-                        <div class="flex items-center justify-between">
-                            <span class="font-medium">
-                                <c:out value="서울"/>
-                            </span>
-                            <button class="text-xs text-blue-600 border border-blue-100 px-2 py-1 rounded-full">
-                                자동 감지
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="space-y-1">
                         <div class="text-gray-400">가입일</div>
                         <div class="font-medium">
                             <c:out value="${myPageInfo.memberInfo.createdAt}"/>
@@ -99,25 +87,13 @@
         <!-- 활동 요약 -->
         <div class="space-y-4">
             <h2 class="text-lg font-semibold">활동 요약</h2>
-            <p class="text-sm text-gray-500">등록한 활동 및 경로 정보</p>
+            <p class="text-sm text-gray-500">등록한 활동 정보</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 gap-4">
                 <div class="rounded-2xl bg-blue-50 p-6 text-center">
                     <div class="text-sm text-gray-500 mb-2">등록된 활동</div>
                     <div class="text-3xl font-bold">
                         <c:out value="${myPageInfo.activityCount}"/>
-                    </div>
-                </div>
-                <div class="rounded-2xl bg-green-50 p-6 text-center">
-                    <div class="text-sm text-gray-500 mb-2">등록된 경로</div>
-                    <div class="text-3xl font-bold">
-                        <c:out value="${myPageInfo.routeCount}"/>
-                    </div>
-                </div>
-                <div class="rounded-2xl bg-purple-50 p-6 text-center">
-                    <div class="text-sm text-gray-500 mb-2">받은 알림</div>
-                    <div class="text-3xl font-bold">
-                        <c:out value="${myPageInfo.alertCount}"/>
                     </div>
                 </div>
             </div>

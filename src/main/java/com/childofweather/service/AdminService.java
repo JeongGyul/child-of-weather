@@ -24,4 +24,8 @@ public class AdminService {
         
         return dto;
 	}
+	
+	public Boolean deleteMember(String memberId) {
+		return memberDAO.deleteMember(memberId);
+	}
 }
