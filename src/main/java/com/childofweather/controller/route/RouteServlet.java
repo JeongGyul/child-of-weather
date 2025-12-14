@@ -1,4 +1,4 @@
-package com.childofweather.controller;
+package com.childofweather.controller.route;
 
 import com.childofweather.util.ApiConfig;
 import jakarta.servlet.ServletException;
