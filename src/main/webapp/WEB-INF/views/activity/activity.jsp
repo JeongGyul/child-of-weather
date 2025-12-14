@@ -76,15 +76,32 @@
                     <div class="card-section">
                         <div class="section-label">
                             <span>&#9881; 최적 타이밍</span>
-                            <span class="status-badge js-status-badge">
-                                분석 중...
-                            </span>
+                            <c:choose>
+                                <c:when test="${not empty a.recommendation and a.recommendation.timingStatus == 'BEST_NOW'}">
+                                    <span class="status-badge status-good">진행 가능</span>
+                                </c:when>
+                                <c:when test="${not empty a.recommendation and a.recommendation.timingStatus == 'PLANNED'}">
+                                    <span class="status-badge status-good" style="background-color: #e3f2fd; color: #1565c0;">예정됨</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="status-badge status-bad">보류 권장</span>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
 
                         <div class="time-row">
                             <span class="time-label">추천</span>
-                            <span class="time-value js-timing-result">
-                                날씨 정보를 불러오는 중
+                            <span class="time-value" style="font-weight: bold; color: ${not empty a.recommendation ? '#2e7d32' : '#c62828'};">
+                                <c:choose>
+                                    <c:when test="${not empty a.recommendation}">
+                                        <%-- DTO에 추가한 getter 사용 (날짜 + 시작시간 ~ 종료시간) --%>
+                                        ${a.recommendation.formattedDate} 
+                                        ${a.recommendation.formattedStartTime} ~ ${a.recommendation.formattedEndTime}
+                                    </c:when>
+                                    <c:otherwise>
+                                        조건에 맞는 시간 없음
+                                    </c:otherwise>
+                                </c:choose>
                             </span>
                         </div>
                     </div>

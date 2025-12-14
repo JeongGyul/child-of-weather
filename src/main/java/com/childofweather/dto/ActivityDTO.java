@@ -1,9 +1,9 @@
 package com.childofweather.dto;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class ActivityDTO {
 	
@@ -60,7 +60,7 @@ public class ActivityDTO {
         private Integer maxTemperature;
         private Integer maxHumidity;
         private Integer maxPrecipitation;
-		Recommendation recommendation;
+		private Recommendation recommendation; // private 접근 제어자 명시 권장
 		private Integer defaultDurationMin;
         
 		public Long getActivityTypeId() {
@@ -100,6 +100,11 @@ public class ActivityDTO {
 			this.memberActivityId = memberActivityId;
 		}
 
+		// ▼ [중요] 이 Getter 메서드가 없어서 에러가 났습니다. 추가됨!
+		public Recommendation getRecommendation() {
+			return recommendation;
+		}
+
 		public void setRecommendation(Recommendation recommendation) {
 			this.recommendation = recommendation;
 		}
@@ -126,6 +131,22 @@ public class ActivityDTO {
 		public LocalTime getStartTime() { return startTime; }
 		public LocalTime getEndTime() { return endTime; }
 		public String getTimingStatus() { return timingStatus; }
+
+		// 화면 표시용 날짜 (예: "05.20(월)")
+		public String getFormattedDate() {
+			if (date == null) return "";
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM.dd(E)", Locale.KOREAN);
+			return date.format(formatter);
+		}
+
+		// 화면 표시용 시간 (예: "15:00")
+		public String getFormattedStartTime() {
+			return (startTime != null) ? startTime.toString() : "";
+		}
+
+		public String getFormattedEndTime() {
+			return (endTime != null) ? endTime.toString() : "";
+		}
 	}
 
 	public static class RecommendActivityResponse {
