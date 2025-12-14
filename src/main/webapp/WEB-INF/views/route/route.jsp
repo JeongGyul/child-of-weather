@@ -9,9 +9,10 @@
    <!-- route.jsp 상단 <head> 안에 있는 네이버 지도 JS 로드 부분 -->
 
 <!-- 네이버 지도 JS (childofweather1 Application의 Client ID 사용) -->
-	<script
-   	 type="text/javascript"
-   	 src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=n3w8jn1lgc&submodules=geocoder&callback=initRouteMap">
+	<%-- 🟢 [수정] 서버에서 전달받은 naverMapClientId 사용 --%>
+	<script 
+   		type="text/javascript" 
+    	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${naverMapClientId}&submodules=geocoder&callback=initRouteMap">
 	</script>
 
 

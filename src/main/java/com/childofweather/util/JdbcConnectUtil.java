@@ -1,7 +1,5 @@
 package com.childofweather.util;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,33 +9,19 @@ import java.util.Properties;
 
 public class JdbcConnectUtil {
 	
-	private static final Properties properties = new Properties();
-
-	static {
-	    try (InputStream input = JdbcConnectUtil.class.getClassLoader().getResourceAsStream("db.properties")) {
-	        if (input == null) {
-	            // 파일을 찾지 못하면 에러 발생
-	            System.out.println("Sorry, unable to find db.properties");
-	            throw new FileNotFoundException("db.properties 파일을 찾을 수 없습니다.");
-	        }
-	        // db.properties 파일 내용을 로드
-	        properties.load(input);
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	    }
-	}
+    // 🟢 [수정] ApiConfig의 공통 메서드를 사용하여 db.properties 로드
+    private static final Properties properties = ApiConfig.load("db.properties");
 
     public static Connection getConnection() {
         try {
-            // MySQL 드라이버 로드
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // db.properties에서 값 읽기
             String url = properties.getProperty("db.url");
             String user = properties.getProperty("db.username");
             String password = properties.getProperty("db.password");
-
-            // DB 연결 시도
+            
+            // 필수 값 체크 로직이 필요하다면 여기에 추가 가능
+            
             return DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("MySQL JDBC 드라이버를 찾을 수 없습니다.", e);
@@ -46,6 +30,7 @@ public class JdbcConnectUtil {
         }
     }
 
+    // close 메서드들은 기존 그대로 유지...
     public static void close(Connection con, PreparedStatement pstmt) {
         try {
             if (pstmt != null) pstmt.close();
