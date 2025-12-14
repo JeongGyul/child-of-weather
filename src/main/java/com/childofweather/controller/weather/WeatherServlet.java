@@ -55,7 +55,6 @@ public class WeatherServlet extends HttpServlet {
             List<ActivityDTO.RecommendActivityResponse> activities = RecommendActivityService.getRecommendActivities(dto);
 
             HttpSession session = request.getSession();
-
             session.setAttribute("hourly", new ArrayList<>(dto.getHourly()));
 
             response.setContentType("application/json; charset=UTF-8");

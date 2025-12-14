@@ -21,16 +21,8 @@ public class MyPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1) 로그인 체크
-        HttpSession session = request.getSession(false);
-        MemberDTO.InfoResponse loginUser = (session == null) ? 
-        		null : (MemberDTO.InfoResponse) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            // 로그인 안 되어 있으면 로그인 화면으로
-            response.sendRedirect(request.getContextPath() + "/login.do");
-            return;
-        }
+    	HttpSession session = request.getSession(false);
+        MemberDTO.InfoResponse loginUser = (MemberDTO.InfoResponse) session.getAttribute("loginUser");
 
         // 2) 마이페이지에 뿌릴 데이터 준비
         MemberDTO.MyPageInfoResponse myPageInfo = memberService.getMyPageInfo(loginUser);

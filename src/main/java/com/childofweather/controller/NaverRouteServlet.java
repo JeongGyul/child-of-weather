@@ -4,7 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import com.childofweather.util.ApiConfig;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,9 +17,8 @@ public class NaverRouteServlet extends HttpServlet {
     private static final String API_URL =
             "https://maps.apigw.ntruss.com/map-direction/v1/driving";
 
-    // ⚠️ [필수 수정]: 네이버 콘솔에서 발급받은 Client ID와 Secret으로 변경하세요.
-    private static final String NAVER_DIRECTIONS_CLIENT_ID  = "YOUR_CLIENT_ID";     // X-NCP-APIGW-API-KEY-ID
-    private static final String NAVER_DIRECTIONS_CLIENT_SECRET = "YOUR_CLIENT_SECRET"; // X-NCP-APIGW-API-KEY
+    private static final String NAVER_DIRECTIONS_CLIENT_ID = ApiConfig.get("naver.map.client.id");
+    private static final String NAVER_DIRECTIONS_CLIENT_SECRET = ApiConfig.get("naver.map.client.secret");
 
     /**
      * 🧪 [TEST] 서버 환경의 HTTPS 연결 상태를 검증하는 메서드 (401 오류 진단용)
