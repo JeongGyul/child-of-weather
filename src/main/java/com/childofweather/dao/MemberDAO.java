@@ -173,7 +173,7 @@ public class MemberDAO {
         }
     }
 
-    public int deleteMember(String memberId) {
+    public Boolean deleteMember(String memberId) {
         int result = 0;
         try {
             conn = JdbcConnectUtil.getConnection();
@@ -185,7 +185,7 @@ public class MemberDAO {
         } finally {
             JdbcConnectUtil.close(conn, pstmt, rs);
         }
-        return result;
+        return result == 1;
     }
 
     public int getUserCount() {
