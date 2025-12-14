@@ -56,8 +56,6 @@
                                         <c:when test="${a.activityTypeId == 2}">세차</c:when>
                                         <c:when test="${a.activityTypeId == 3}">실외 운동</c:when>
                                         <c:when test="${a.activityTypeId == 4}">정원 가꾸기</c:when>
-                                        <c:when test="${a.activityTypeId == 5}">외벽 페인트</c:when>
-                                        <c:otherwise>기타</c:otherwise>
                                     </c:choose>
                                 </div>
                                 <div class="card-title-sub">
@@ -165,8 +163,6 @@
                         <option value="2" data-icon="&#128663;">세차</option>
                         <option value="3" data-icon="&#127939;">실외 운동</option>
                         <option value="4" data-icon="&#127793;">정원 가꾸기</option>
-                        <option value="5" data-icon="&#127912;">외벽 페인트</option>
-                        <option value="6" data-icon="&#128221;">기타</option>
                     </select>
                 </div>
             </div>
