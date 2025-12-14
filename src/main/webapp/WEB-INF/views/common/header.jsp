@@ -46,9 +46,6 @@
     		경로
 		</a>
         
-        
-        <div class="tab-item ${param.activeMenu == 'notification' ? 'active' : ''}">알림</div>
-        
         <a href="${pageContext.request.contextPath}/mypage.do" 
         	class="tab-item ${param.activeMenu == 'my' ? 'active' : ''}">마이
         </a>
