@@ -104,6 +104,11 @@
     </footer>
 </div>
 
+<script>
+    // Context Path를 JavaScript 변수로 선언
+    const contextPath = '${pageContext.request.contextPath}';
+</script>
 <script src="${pageContext.request.contextPath}/js/admin.js"></script>
+
 </body>
 </html>

@@ -26,6 +26,8 @@ public class AdminService {
 	}
 	
 	public Boolean deleteMember(String memberId) {
+		// [수정 완료]: DB의 ON DELETE CASCADE 기능으로 종속 데이터가 자동 삭제되므로,
+		// ActivityDAO 호출 로직 없이 MemberDAO만 호출합니다.
 		return memberDAO.deleteMember(memberId);
 	}
 }

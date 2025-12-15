@@ -177,15 +177,34 @@ public class MemberDAO {
         }
     }
 
+ // MemberDAO.java (수정할 부분)
+
     public Boolean deleteMember(String memberId) {
         int result = 0;
         try {
+            // 1. ID를 Long 타입으로 변환
+            long id = Long.parseLong(memberId); 
+            
+            // [로그 추가 1] 삭제를 시도하는 ID 확인
+            System.out.println("[DELETE LOG] Attempting to delete member ID: " + id); 
+            
             conn = JdbcConnectUtil.getConnection();
             pstmt = conn.prepareStatement(USER_DELETE);
-            pstmt.setString(1, memberId);
+            
+            // 2. Long 타입으로 설정
+            pstmt.setLong(1, id); 
+            
             result = pstmt.executeUpdate();
+            
+            // [로그 추가 2] SQL 실행 결과 (영향 받은 행 수) 확인
+            System.out.println("[DELETE LOG] SQL executeUpdate result (rows affected): " + result); 
+
         } catch (SQLException e) {
+            // [로그 추가 3] SQL 오류 발생 시 확인
+            System.err.println("[DELETE ERROR] SQL Exception: " + e.getMessage());
             e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.err.println("[DELETE ERROR] Invalid ID format: " + memberId);
         } finally {
             JdbcConnectUtil.close(conn, pstmt, rs);
         }
